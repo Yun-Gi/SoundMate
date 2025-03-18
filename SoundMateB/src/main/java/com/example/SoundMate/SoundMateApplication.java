@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class SoundMateApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SoundMateApplication.class, args);
+		SpringApplication app = new SpringApplication(SoundMateApplication.class);
+		app.run(args);
 	}
-
 }

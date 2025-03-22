@@ -9,10 +9,10 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class User { // 일단 이 쪽은 파이어베이스 객체가 어떻게 올 지 몰라서
 
     @Id
-    private String userId;
+    private String userId; 
 
     @Column(name = "email", nullable = false, unique = true)
     private String email;

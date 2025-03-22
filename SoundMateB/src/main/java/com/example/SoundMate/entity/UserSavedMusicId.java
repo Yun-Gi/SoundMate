@@ -14,6 +14,9 @@ import lombok.*;
 
 public class UserSavedMusicId implements Serializable {
     
+    @Column(name = "user_id")
     private String userId;
+
+    @Column(name = "youtube_link")
     private String youtubeLink;
 }

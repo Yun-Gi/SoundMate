@@ -1,0 +1,37 @@
+# === 공통 ===
+*.log
+*.tmp
+*.swp
+*.bak
+.DS_Store
+Thumbs.db
+
+# === Java / Spring Boot ===
+/bin/
+/build/
+/out/
+/target/
+*.class
+*.jar
+*.war
+*.iml
+.gradle/
+/.idea/
+
+# === VS Code ===
+.vscode/
+*.code-workspace
+
+# === Android ===
+/app/build/
+/.gradle/
+/local.properties
+*.apk
+*.keystore
+
+# === 환경 설정 파일 (보안 정보) ===
+.env
+*.key
+*.pem
+*.jks
+serviceAccountKey.json

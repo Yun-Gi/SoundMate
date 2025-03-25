@@ -15,6 +15,7 @@ public class ChatbotData {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @Column(name = "chat_id")
     private Long chatId;
 
     @Column(name = "user_id", nullable = false)

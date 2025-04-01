@@ -26,4 +26,13 @@ public class UserSavedMusicService {
     public UserSavedMusic saveUserSavedMusic(UserSavedMusic userSavedMusic) {
         return userSavedMusicRepository.save(userSavedMusic);
     }
+
+    // 저장한 음악 삭제
+    public boolean deleteByIdIfExists(UserSavedMusicId id) {
+        if (userSavedMusicRepository.existsById(id)) {
+            userSavedMusicRepository.deleteById(id);
+            return true;
+        }
+        return false;
+    }
 }

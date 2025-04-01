@@ -22,7 +22,21 @@ public class UserPreferredGenresService {
     }
 
     // 유저 선호 장르 저장
-    public UserPreferredGenres savePreferredGenres(UserPreferredGenres userPreferredGenres) {
-        return userPreferredGenresRepository.save(userPreferredGenres);
+    public UserPreferredGenres savePreferredGenres(UserPreferredGenres request) {
+        if (userPreferredGenresRepository.existsByUserIdAndGenreId(
+            request.getUser().getUserId(), request.getGenre().getGenreId())) {
+        throw new IllegalArgumentException("이미 선호 장르에 등록됨");
+    }
+
+        return userPreferredGenresRepository.save(request);
+    }
+
+    //유저 선호 장르 삭제
+    public boolean deleteByIdIfExists(Long pid) {
+        if (userPreferredGenresRepository.existsById(pid)) {
+            userPreferredGenresRepository.deleteById(pid);
+            return true;
+        }
+        return false;
     }
 }

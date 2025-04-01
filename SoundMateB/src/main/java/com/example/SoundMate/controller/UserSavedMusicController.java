@@ -33,10 +33,23 @@ public class UserSavedMusicController {
                      .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    // 저장된 음악 저장
+    // 저장할 음악 저장
     @PostMapping
     public ResponseEntity<UserSavedMusic> saveMusic(@RequestBody UserSavedMusic music) {
         return ResponseEntity.ok(userSavedMusicService.saveUserSavedMusic(music));
+    }
+
+    // 저장된 음악 삭제
+    @DeleteMapping
+    public ResponseEntity<Void> deleteSavedMusic(
+            @RequestParam String userId,
+            @RequestParam String youtubeLink) {
+        
+        UserSavedMusicId id = new UserSavedMusicId(userId, youtubeLink);
+        boolean deleted = userSavedMusicService.deleteByIdIfExists(id);
+
+        return deleted ? ResponseEntity.noContent().build()
+                    : ResponseEntity.notFound().build();
     }
 }
 

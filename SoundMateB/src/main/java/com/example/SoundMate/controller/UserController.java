@@ -18,5 +18,23 @@ public class UserController {
     }
 
     // CURD 생성
-    //
+    // 유저 조회
+    @GetMapping
+    public ResponseEntity<User> getUser(@RequestParam String id) {
+        Optional<User> result = userService.findUserById(id);
+        return result.map(ResponseEntity::ok)
+                 .orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    // 유저 삭제(파이어 베이스에서 삭제하고 남은 것들)
+    @DeleteMapping
+    public ResponseEntity<Void> deleteUser(@RequestParam String id) {
+        Optional<User> user = userService.findUserById(id);
+        if (user.isPresent()) {
+            userService.deleteUserAndRelatedData(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

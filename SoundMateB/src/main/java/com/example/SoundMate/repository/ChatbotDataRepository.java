@@ -6,5 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ChatbotDataRepository extends JpaRepository<ChatbotData, Long>{
-    
+    void deleteByUser_UserId(String userId);
 }

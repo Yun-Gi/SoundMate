@@ -26,4 +26,18 @@ public class ChatbotDataService {
         return chatbotDataRepository.save(chatbotData);
     }
 
+    // 데이터 삭제
+    public boolean deleteByIdIfExists(Long cid) {
+        if (chatbotDataRepository.existsById(cid)) {
+            chatbotDataRepository.deleteById(cid);
+            return true;
+        }
+        return false;
+    }
+    
+    // 모든 데이터 삭제제
+    public void deleteAllChatData(String uid) {
+        chatbotDataRepository.deleteByUser_UserId(uid);
+    }
+    
 }

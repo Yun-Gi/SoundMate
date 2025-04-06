@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-
 @RestController
 @RequestMapping("/api/preferred")
 public class UserPreferredGenresController {
@@ -36,7 +35,7 @@ public class UserPreferredGenresController {
     
     // 선호 장르 삭제(유저가 질린 장르 삭제)
     @DeleteMapping
-    public  ResponseEntity<Void> deleteGenres(@RequestParam Long id) {
+    public ResponseEntity<Void> deleteGenres(@RequestParam Long id) {
         boolean deleted = userPreferredGenresService.deleteByIdIfExists(id);
         return deleted ? ResponseEntity.noContent().build() : ResponseEntity.notFound().build(); 
     }

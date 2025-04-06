@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserSavedMusicRepository extends JpaRepository<UserSavedMusic, UserSavedMusicId> {
-    
+    void deleteById_UserId(String userId);
 }

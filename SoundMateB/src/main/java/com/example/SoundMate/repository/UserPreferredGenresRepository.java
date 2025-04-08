@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface UserPreferredGenresRepository extends JpaRepository<UserPreferredGenres, Long> {
-    boolean existsByUserIdAndGenreId(String userId, Integer genreId);
+    boolean existsByUser_UserIdAndGenre_GenreId(String userId, Integer genreId);
     void deleteByUser_UserId(String userId);
 }

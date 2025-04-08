@@ -36,6 +36,7 @@ dependencies {
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 	implementation("com.google.firebase:firebase-admin:9.2.0")
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+	implementation("org.json:json:20231013")
 }
 
 tasks.withType<Test> {

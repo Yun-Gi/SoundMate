@@ -12,6 +12,7 @@ import lombok.*;
 public class User { // 일단 이 쪽은 파이어베이스 객체가 어떻게 올 지 몰라서
 
     @Id
+    @Column(name = "user_id")
     private String userId; 
 
     @Column(name = "email", nullable = false, unique = true)

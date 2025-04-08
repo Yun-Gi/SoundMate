@@ -23,7 +23,7 @@ public class UserPreferredGenresService {
 
     // 유저 선호 장르 저장
     public UserPreferredGenres savePreferredGenres(UserPreferredGenres request) {
-        if (userPreferredGenresRepository.existsByUserIdAndGenreId(
+        if (userPreferredGenresRepository.existsByUser_UserIdAndGenre_GenreId(
             request.getUser().getUserId(), request.getGenre().getGenreId())) {
         throw new IllegalArgumentException("이미 선호 장르에 등록됨");
     }

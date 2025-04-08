@@ -18,8 +18,9 @@ public class ChatbotData {
     @Column(name = "chat_id")
     private Long chatId;
 
-    @Column(name = "user_id", nullable = false)
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    private User user;
 
     @Lob
     @Column(name = "message", nullable = false)

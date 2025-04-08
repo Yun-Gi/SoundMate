@@ -2,6 +2,8 @@ package com.example.SoundMate.service;
 
 import java.net.URI;
 import java.net.http.*;
+import java.nio.charset.StandardCharsets;
+import java.net.URLEncoder;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.configurationprocessor.json.JSONObject;
@@ -19,28 +21,29 @@ public class YoutubeService {
         "https://www.googleapis.com/youtube/v3/search?part=snippet&type=video&maxResults=1&q=%s&key=%s";
 
     public String searchTopVideoUrl(String keyword) {
-        String url = String.format(YOUTUBE_SEARCH_URL, keyword, apiKey);
-
         try {
-            HttpClient client = HttpClient.newHttpClient();
-            HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create(url))
-                .GET()
-                .build();
+        String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
+        String url = String.format(YOUTUBE_SEARCH_URL, encodedKeyword, apiKey); 
 
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpClient client = HttpClient.newHttpClient();
+        HttpRequest request = HttpRequest.newBuilder()
+            .uri(URI.create(url))
+            .GET()
+            .build();
 
-            JSONObject json = new JSONObject(response.body());
-            String videoId = json.getJSONArray("items")
-                                 .getJSONObject(0)
-                                 .getJSONObject("id")
-                                 .getString("videoId");
+        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            return "https://www.youtube.com/watch?v=" + videoId;
+        JSONObject json = new JSONObject(response.body());
+        String videoId = json.getJSONArray("items")
+                             .getJSONObject(0)
+                             .getJSONObject("id")
+                             .getString("videoId");
 
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
+        return "https://www.youtube.com/watch?v=" + videoId;
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        return null;
+    }
     }
 }

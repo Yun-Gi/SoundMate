@@ -4,20 +4,16 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -25,19 +21,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 
-class Login : ComponentActivity() {
+class PasswordRecovery : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             SoundMateTheme {
-                LoginScreen()
+                PasswordRecoveryScreen()
             }
         }
     }
 }
 
 @Composable
-fun LoginScreen() {
+fun PasswordRecoveryScreen() {
     val context = LocalContext.current
 
     Column(
@@ -60,24 +56,28 @@ fun LoginScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Text("로그인", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-        Text("아이디와 비밀번호를 입력해주세요", fontSize = 14.sp, color = Color.Black)
+        Text("비밀번호를 잃어버리셨나요?", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Text("이메일을 입력 해 주세요", fontSize = 14.sp, color = Color.Black)
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LoginTextField(label = "아이디")
-        LoginTextField(label = "비밀번호", password = true)
-
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "비밀번호를 잃어버리셨나요?",
-            fontSize = 14.sp,
-            color = Color(0xFF6A707C),
-            textAlign = TextAlign.End,
-            modifier = Modifier.fillMaxWidth()
+        OutlinedTextField(
+            value = "",
+            onValueChange = {},
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(56.dp),
+            shape = RoundedCornerShape(8.dp),
+            label = { Text("이메일") },
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = Color(0xFFE0E0E0),
+                unfocusedBorderColor = Color(0xFFE0E0E0)
+            ),
+            visualTransformation = VisualTransformation.None,
+            singleLine = true
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = { /* 확인 동작 */ },
             modifier = Modifier
@@ -91,34 +91,11 @@ fun LoginScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
         Text(
-            text = "계정이 없으신가요? 회원가입 하기",
+            text = "비밀번호가 기억나셨나요? 로그인하기",
             fontSize = 15.sp,
             color = Color(0xFF1E232C),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-fun LoginTextField(label: String, password: Boolean = false) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 8.dp)) {
-        Text(label, fontSize = 14.sp, color = Color(0xFF828282))
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFE0E0E0),
-                disabledBorderColor = Color(0xFFE0E0E0)
-            ),
-            visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
-            singleLine = true
+            textAlign = TextAlign.Center,
+            modifier = Modifier.clickable { (context as? ComponentActivity)?.finish() }
         )
     }
 }

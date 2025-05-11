@@ -85,7 +85,10 @@ fun MainScreen() {
 
         // 회원가입 버튼
         Button(
-            onClick = { /* 회원가입 클릭 동작 */ },
+            onClick = { /* 회원가입 클릭 동작 */
+                val intent = Intent(context, Signup::class.java)
+                context.startActivity(intent)
+            },
             colors = ButtonDefaults.buttonColors(
                 containerColor = Color(0xFFEEEEEE),
                 contentColor = Color.Black

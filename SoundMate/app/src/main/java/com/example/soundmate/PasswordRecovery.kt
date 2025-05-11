@@ -1,5 +1,6 @@
 package com.example.soundmate
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -14,12 +15,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
+import androidx.compose.foundation.border
 
 class PasswordRecovery : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,39 +44,35 @@ fun PasswordRecoveryScreen() {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Back button
-        Box(
+        Row(
             modifier = Modifier
-                .size(41.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp))
-                .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
-                .clickable { (context as? ComponentActivity)?.finish() },
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Box(
+                modifier = Modifier
+                    .size(41.dp)
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .border(
+                        BorderStroke(1.dp, Color(0xFFE8ECF4)),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .clickable { (context as? ComponentActivity)?.finish() },
+                contentAlignment = Alignment.Center
+            ) {
+                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(32.dp))
 
-        Text("비밀번호를 잃어버리셨나요?", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
+        Text("비밀번호를 잃어버리셨나요?", fontSize = 16.sp, fontWeight = FontWeight.Bold)
         Text("이메일을 입력 해 주세요", fontSize = 14.sp, color = Color.Black)
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        OutlinedTextField(
-            value = "",
-            onValueChange = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(8.dp),
-            label = { Text("이메일") },
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFE0E0E0)
-            ),
-            visualTransformation = VisualTransformation.None,
-            singleLine = true
-        )
+        LoginTextField(label = " 이메일", withDivider = true)
 
         Spacer(modifier = Modifier.height(24.dp))
         Button(
@@ -90,12 +87,37 @@ fun PasswordRecoveryScreen() {
         }
 
         Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = "비밀번호가 기억나셨나요? 로그인하기",
-            fontSize = 15.sp,
-            color = Color(0xFF1E232C),
-            textAlign = TextAlign.Center,
-            modifier = Modifier.clickable { (context as? ComponentActivity)?.finish() }
-        )
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter // Box에서 아래 고정
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 10.dp), // 하단 여백
+                horizontalArrangement = Arrangement.Center, // 가운데 정렬
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "비밀번호가 기억나셨나요? ",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color(0xFF828282)
+                )
+                Text(
+                    text = "로그인하기",
+                    fontSize = 14.sp,
+                    color = Color(0xFF04B4AE),
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier.clickable {
+                        val intent = Intent(context, Signup::class.java)
+                        context.startActivity(intent)
+                    }
+                )
+                Spacer(modifier = Modifier.height(8.dp)) // 텍스트와 구분선 사이 간격
+            }
+        }
     }
 }
+

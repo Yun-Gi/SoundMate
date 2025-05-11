@@ -17,9 +17,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
+import androidx.compose.foundation.border
+import androidx.compose.ui.text.input.VisualTransformation
+
 
 class Settings : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

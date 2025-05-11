@@ -15,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.soundmate.ui.theme.SoundMateTheme
+import androidx.compose.ui.text.font.FontWeight
 
 class AutoLogin : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

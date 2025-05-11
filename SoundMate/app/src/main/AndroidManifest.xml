@@ -12,8 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.SoundMate"
         tools:targetApi="31">
-        <activity
-            android:name=".Login" />
+        <activity android:name=".Login" />
+        <activity android:name=".Signup" />
+        <activity android:name=".PasswordRecovery" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

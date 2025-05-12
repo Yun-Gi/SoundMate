@@ -23,6 +23,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,9 @@ class Login : ComponentActivity() {
 @Composable
 fun LoginScreen() {
     val context = LocalContext.current
+    var id by remember { mutableStateOf("") }
+    var pw by remember { mutableStateOf("") }
+    val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -70,8 +75,8 @@ fun LoginScreen() {
 
         Spacer(modifier = Modifier.height(16.dp))
 
-        LoginTextField(label = " 아이디", withDivider = true)
-        LoginTextField(label = " 비밀번호", password = true, withDivider = true)
+        LoginTextField(label = " 아이디", value = id,onValueChange = { id = it }, withDivider = true)
+        LoginTextField(label = " 비밀번호",value = pw,onValueChange = { pw = it },password = true, withDivider = true)
 
         Row(
             modifier = Modifier
@@ -92,7 +97,21 @@ fun LoginScreen() {
         }
         Spacer(modifier = Modifier.height(12.dp))
         Button(
-            onClick = { /* 확인 동작 */ },
+            onClick = {
+                if (id.isNotEmpty() && pw.isNotEmpty()) {
+                    firebaseAuth.signInWithEmailAndPassword(id, pw)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                                // 로그인 성공 시 다음 화면으로 이동
+                            } else {
+                                Toast.makeText(context, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(context, "아이디와 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -178,7 +197,7 @@ fun LoginScreen() {
 
 
 @Composable
-fun LoginTextField(label: String, password: Boolean = false, withDivider: Boolean = false) {
+fun LoginTextField(label: String, value: String , onValueChange: (String) -> Unit, password: Boolean = false, withDivider: Boolean = false) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(vertical = 8.dp)) {
@@ -191,8 +210,8 @@ fun LoginTextField(label: String, password: Boolean = false, withDivider: Boolea
         }
         Spacer(modifier = Modifier.height(5.dp))
         OutlinedTextField(
-            value = "",
-            onValueChange = {},
+            value = value,
+            onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),

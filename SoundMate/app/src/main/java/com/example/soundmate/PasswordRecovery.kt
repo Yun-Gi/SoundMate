@@ -36,6 +36,7 @@ class PasswordRecovery : ComponentActivity() {
 @Composable
 fun PasswordRecoveryScreen() {
     val context = LocalContext.current
+    var email by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -72,7 +73,7 @@ fun PasswordRecoveryScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        LoginTextField(label = " 이메일", withDivider = true)
+        LoginTextField(label = " 이메일", value = email, onValueChange = { email = it },withDivider = true)
 
         Spacer(modifier = Modifier.height(24.dp))
         Button(

@@ -2,6 +2,7 @@ package com.example.soundmate
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -23,6 +24,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
+import com.google.firebase.auth.FirebaseAuth
 
 
 class Signup : ComponentActivity() {
@@ -40,6 +42,13 @@ class Signup : ComponentActivity() {
 fun SignupScreen() {
     val context = LocalContext.current
     var gender by remember { mutableStateOf("남성") }
+    var id by remember { mutableStateOf("") }
+    var pw by remember { mutableStateOf("") }
+    var rpw by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
+    val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+    val firebaseFirestore: FirebaseFirestore = Firebasefirestore.getInstance()
+
 
     Column(
         modifier = Modifier
@@ -76,10 +85,9 @@ fun SignupScreen() {
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        SignupTextField(label = " 아이디 ", value = "cs2025", withDivider = true)
-        SignupTextField(label = " 비밀번호 ", value = "1234", password = true, withDivider = true)
-        SignupTextField(label = " 비밀번호 확인 ", value = "1234", password = true, withDivider = true)
-        SignupTextField(label = " 이메일 ", value = "cs2025@gmail.com", withDivider = true)
+        LoginTextField(label = " 이메일 ", value = id, onValueChange = { id = it}, withDivider = true)
+        LoginTextField(label = " 비밀번호 ", value = pw, onValueChange = { pw = it }, password = true, withDivider = true)
+        LoginTextField(label = " 비밀번호 확인 ", value = rpw, onValueChange = { rpw = it }, password = true, withDivider = true)
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -111,11 +119,50 @@ fun SignupScreen() {
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        SignupTextField(label = "나이", value = "20", withDivider = true)
+        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true)
 
         Spacer(modifier = Modifier.height(24.dp))
         Button(
-            onClick = { /* 확인 동작 */ },
+            onClick = {
+                if (id.isNotEmpty() && pw.isNotEmpty()) {
+                    if (pw == rpw) {
+                        firebaseAuth.createUserWithEmailAndPassword(id, pw)
+                            .addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    // Firestore에 사용자 정보 저장
+                                    val userId = firebaseAuth.currentUser?.uid ?: ""
+                                    val db = FirebaseFirestore.getInstance()
+                                    val userInfo = hashMapOf(
+                                        "email" to id,
+                                        "gender" to gender,
+                                        "age" to age
+                                    )
+                                    db.collection("users").document(userId)
+                                        .set(userInfo)
+                                        .addOnSuccessListener {
+                                            Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                            val intent = Intent(context, Login::class.java)
+                                            context.startActivity(intent)
+                                        }
+                                        .addOnFailureListener {
+                                            Toast.makeText(context, "회원정보 저장 실패", Toast.LENGTH_SHORT).show()
+                                        }
+                                } else {
+                                    Toast.makeText(
+                                        context,
+                                        "회원가입 실패: ${task.exception?.message}",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+                    } else {
+                        Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+
+                    Toast.makeText(context, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -160,41 +207,6 @@ fun SignupScreen() {
 
             }
         }
-    }
-}
-
-@Composable
-fun SignupTextField(label: String, value: String, password: Boolean = false, withDivider: Boolean = false) {
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(vertical = 8.dp)) {
-        Row(modifier = Modifier.fillMaxWidth(), verticalAlignment = Alignment.CenterVertically) {
-            Text(label, fontSize = 14.sp, color = Color(0xFF828282))
-            if (withDivider) {
-                Spacer(modifier = Modifier.width(8.dp))
-                Divider(color = Color(0xFFE6E6E6), thickness = 1.dp, modifier = Modifier.weight(1f))
-            }
-        }
-        Spacer(modifier = Modifier.height(5.dp))
-        OutlinedTextField(
-            value = value,
-            onValueChange = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(48.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = Color(0xFFE0E0E0),
-                unfocusedBorderColor = Color(0xFFE0E0E0),
-                disabledBorderColor = Color(0xFFE0E0E0)
-            ),
-            textStyle = LocalTextStyle.current.copy( // 텍스트 스타일 수정
-                fontSize = 14.sp,  // 여기서 글자 크기를 조절
-                lineHeight = 14.sp // 줄 간격을 조절하여 잘리지 않도록
-            ),
-            visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
-            singleLine = true
-        )
     }
 }
 

@@ -37,4 +37,10 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    // 유저 생성
+    // @PostMapping
+    // public ResponseEntity<User> createUser(@RequestBody User user) {
+        
+    // }
 }

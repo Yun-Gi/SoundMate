@@ -17,8 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
@@ -47,7 +45,6 @@ fun SignupScreen() {
     var rpw by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
-    val firebaseFirestore: FirebaseFirestore = Firebasefirestore.getInstance()
 
 
     Column(
@@ -129,30 +126,13 @@ fun SignupScreen() {
                         firebaseAuth.createUserWithEmailAndPassword(id, pw)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    // Firestore에 사용자 정보 저장
-                                    val userId = firebaseAuth.currentUser?.uid ?: ""
-                                    val db = FirebaseFirestore.getInstance()
-                                    val userInfo = hashMapOf(
-                                        "email" to id,
-                                        "gender" to gender,
-                                        "age" to age
-                                    )
-                                    db.collection("users").document(userId)
-                                        .set(userInfo)
-                                        .addOnSuccessListener {
-                                            Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                                            val intent = Intent(context, Login::class.java)
-                                            context.startActivity(intent)
-                                        }
-                                        .addOnFailureListener {
-                                            Toast.makeText(context, "회원정보 저장 실패", Toast.LENGTH_SHORT).show()
-                                        }
+                                    // Firebase 인증 성공, 사용자 정보 로컬 DB에 저장
+                                    //saveUserToLocalDB(email, gender, age, context)
+                                    Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                    val intent = Intent(context, Login::class.java)
+                                    context.startActivity(intent)
                                 } else {
-                                    Toast.makeText(
-                                        context,
-                                        "회원가입 실패: ${task.exception?.message}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast.makeText(context, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
                             }
                     } else {

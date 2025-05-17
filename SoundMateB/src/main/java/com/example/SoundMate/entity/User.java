@@ -20,5 +20,11 @@ public class User { // 일단 이 쪽은 파이어베이스 객체가 어떻게 
 
     @Column(name = "display_name")
     private String displayName;
+
+    @Column(name = "age")
+    private int age;
+
+    @Column(name = "gender")
+    private String gender;
 }
 

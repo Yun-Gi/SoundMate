@@ -9,4 +9,6 @@ public class UserRegistrationDTO {
     private String email;
     private String password;
     private String displayName;
+    private int age;
+    private String gender;
 }

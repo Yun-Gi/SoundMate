@@ -1,5 +1,6 @@
 package com.example.soundmate
 
+import User
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -126,11 +127,26 @@ fun SignupScreen() {
                         firebaseAuth.createUserWithEmailAndPassword(id, pw)
                             .addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    // Firebase 인증 성공, 사용자 정보 로컬 DB에 저장
-                                    //saveUserToLocalDB(email, gender, age, context)
-                                    Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                                    val intent = Intent(context, Login::class.java)
-                                    context.startActivity(intent)
+                                    // Firebase 인증 성공
+                                    val userId = firebaseAuth.currentUser?.uid ?: ""
+                                    val user = User(email = id, gender = gender, age = age.toIntOrNull() ?: 0)
+
+                                    // 회원가입 API 호출 (MySQL 서버에 사용자 정보 저장)
+                                    RetrofitInstance.api.registerUser(user).enqueue(object : retrofit2.Callback<Void> {
+                                        override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
+                                            if (response.isSuccessful) {
+                                                Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                                val intent = Intent(context, Login::class.java)
+                                                context.startActivity(intent)
+                                            } else {
+                                                Toast.makeText(context, "서버 저장 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+
+                                        override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
+                                            Toast.makeText(context, "서버 연결 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                                        }
+                                    })
                                 } else {
                                     Toast.makeText(context, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                                 }
@@ -139,7 +155,6 @@ fun SignupScreen() {
                         Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
                     }
                 } else {
-
                     Toast.makeText(context, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
             },

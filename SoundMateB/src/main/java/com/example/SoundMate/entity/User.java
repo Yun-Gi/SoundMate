@@ -20,8 +20,5 @@ public class User { // 일단 이 쪽은 파이어베이스 객체가 어떻게 
 
     @Column(name = "display_name")
     private String displayName;
-
-    @Column(name = "profile_picture_url")
-    private String profilePictureUrl; 
 }
 

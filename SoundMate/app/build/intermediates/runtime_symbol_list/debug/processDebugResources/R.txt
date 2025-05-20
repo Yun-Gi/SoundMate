@@ -94,6 +94,7 @@ int drawable common_google_signin_btn_text_light 0x7f040010
 int drawable common_google_signin_btn_text_light_focused 0x7f040011
 int drawable common_google_signin_btn_text_light_normal 0x7f040012
 int drawable common_google_signin_btn_text_light_normal_background 0x7f040013
+int drawable google 0x7f04002f
 int drawable googleg_disabled_color_18 0x7f040014
 int drawable googleg_standard_color_18 0x7f040015
 int drawable ic_call_answer 0x7f040016

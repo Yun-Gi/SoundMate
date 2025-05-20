@@ -27,6 +27,7 @@ import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
+import androidx.compose.ui.layout.ContentScale
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -160,8 +161,8 @@ fun LoginScreen() {
         ) {
             Image(
                 painter = painterResource(id = R.drawable.google), // 여기에 이미지 파일명
-                contentDescription = "Google Login",
-                modifier = Modifier.size(32.dp)
+                contentDescription = "Google Login" ,
+                
             )
         }
 

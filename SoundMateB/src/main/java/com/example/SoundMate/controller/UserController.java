@@ -69,6 +69,7 @@ public class UserController {
             user.setDisplayName(userDto.getDisplayName());
             user.setAge(userDto.getAge());
             user.setGender(userDto.getGender());
+            user.setGenre(userDto.getGenre());
 
             // MySQL에 사용자 정보 저장
             userService.saveUser(user);

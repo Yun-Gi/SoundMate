@@ -26,5 +26,8 @@ public class User { // 일단 이 쪽은 파이어베이스 객체가 어떻게 
 
     @Column(name = "gender")
     private String gender;
+
+    @Column(name = "genre")
+    private String genre;
 }
 

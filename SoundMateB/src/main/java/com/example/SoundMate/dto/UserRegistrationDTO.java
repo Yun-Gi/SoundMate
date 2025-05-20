@@ -11,4 +11,5 @@ public class UserRegistrationDTO {
     private String displayName;
     private int age;
     private String gender;
+    private String genre;
 }

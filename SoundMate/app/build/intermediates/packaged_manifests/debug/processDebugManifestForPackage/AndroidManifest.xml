@@ -8,6 +8,7 @@
         android:minSdkVersion="23"
         android:targetSdkVersion="35" />
 
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -32,15 +33,17 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:testOnly="true"
-        android:theme="@style/Theme.SoundMate" >
+        android:theme="@style/Theme.SoundMate"
+        android:usesCleartextTraffic="true" >
         <activity android:name="com.example.soundmate.Login" />
         <activity android:name="com.example.soundmate.Signup" />
         <activity android:name="com.example.soundmate.PasswordRecovery" />
         <activity
-            android:name="com.example.soundmate.MainActivity"
+            android:name="com.example.soundmate.ChatScreen"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SoundMate" >
@@ -63,6 +66,15 @@
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+                android:value="com.google.firebase.components.ComponentRegistrar" />
+            <meta-data
+                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
                 android:value="com.google.firebase.components.ComponentRegistrar" />
             <meta-data
                 android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
@@ -181,6 +193,10 @@
             android:exported="false"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 
+        <uses-library
+            android:name="android.ext.adservices"
+            android:required="false" />
+
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="com.example.soundmate.androidx-startup"
@@ -195,10 +211,6 @@
                 android:name="androidx.profileinstaller.ProfileInstallerInitializer"
                 android:value="androidx.startup" />
         </provider>
-
-        <uses-library
-            android:name="android.ext.adservices"
-            android:required="false" />
 
         <meta-data
             android:name="com.google.android.gms.version"

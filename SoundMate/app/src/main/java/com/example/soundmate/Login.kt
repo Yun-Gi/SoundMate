@@ -25,6 +25,8 @@ import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import androidx.compose.ui.res.painterResource
+import androidx.compose.foundation.Image
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -156,7 +158,11 @@ fun LoginScreen() {
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.White)
         ) {
-            Text("G", color = Color.Black, fontSize = 24.sp)
+            Image(
+                painter = painterResource(id = R.drawable.google), // 여기에 이미지 파일명
+                contentDescription = "Google Login",
+                modifier = Modifier.size(32.dp)
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))

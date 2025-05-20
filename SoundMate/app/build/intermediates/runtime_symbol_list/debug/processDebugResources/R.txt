@@ -109,6 +109,7 @@ int drawable ic_launcher_foreground 0x7f04001f
 int drawable ic_other_sign_in 0x7f040020
 int drawable ic_passkey 0x7f040021
 int drawable ic_password 0x7f040022
+int drawable lcon 0x7f040031
 int drawable logo 0x7f040023
 int drawable notification_action_background 0x7f040024
 int drawable notification_bg 0x7f040025

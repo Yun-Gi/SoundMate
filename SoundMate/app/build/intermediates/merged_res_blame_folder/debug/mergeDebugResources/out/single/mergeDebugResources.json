@@ -8,6 +8,10 @@
         "source": "com.example.soundmate.app-main-64:/mipmap-anydpi-v26/ic_launcher.xml"
     },
     {
+        "merged": "com.example.soundmate.app-debug-62:/drawable_google.jpg.flat",
+        "source": "com.example.soundmate.app-main-64:/drawable/google.jpg"
+    },
+    {
         "merged": "com.example.soundmate.app-debug-62:/mipmap-hdpi_ic_launcher_round.webp.flat",
         "source": "com.example.soundmate.app-main-64:/mipmap-hdpi/ic_launcher_round.webp"
     },

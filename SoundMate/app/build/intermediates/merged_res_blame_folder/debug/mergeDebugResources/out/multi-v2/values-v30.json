@@ -4,7 +4,7 @@
             "outputFile": "com.example.soundmate.app-mergeDebugResources-60:/values-v30/values-v30.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\Admin\\.gradle\\caches\\8.11.1\\transforms\\77df6fd5a846e18d336046749db5bfb7\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
+                    "source": "C:\\Users\\User\\.gradle\\caches\\8.11.1\\transforms\\77df6fd5a846e18d336046749db5bfb7\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

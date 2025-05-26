@@ -204,7 +204,7 @@ fun LoginScreen() {
 
 
 @Composable
-fun LoginTextField(label: String, value: String , onValueChange: (String) -> Unit, password: Boolean = false, withDivider: Boolean = false) {
+fun LoginTextField(label: String, value: String , onValueChange: (String) -> Unit, password: Boolean = false, withDivider: Boolean = false, placeHolder: String = "") {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(vertical = 8.dp)) {
@@ -233,7 +233,15 @@ fun LoginTextField(label: String, value: String , onValueChange: (String) -> Uni
                 lineHeight = 14.sp // 줄 간격을 조절하여 잘리지 않도록
             ),
             visualTransformation = if (password) PasswordVisualTransformation() else VisualTransformation.None,
-            singleLine = true
+            singleLine = true,
+            placeholder = {
+                Text(
+                    text = placeHolder,
+                    fontSize = 13.sp,
+                    lineHeight = 14.sp, // 줄 간격을 조절하여 잘리지 않도록
+                    color = Color.LightGray
+                )
+            }
         )
     }
 }

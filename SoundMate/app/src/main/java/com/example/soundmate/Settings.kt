@@ -14,13 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
-import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.foundation.shape.CircleShape
+
+
 
 
 class Settings : ComponentActivity() {
@@ -37,39 +38,188 @@ class Settings : ComponentActivity() {
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
+    var gender by remember { mutableStateOf("남성") }
+    var pw by remember { mutableStateOf("") }
+    var cpw by remember { mutableStateOf("") }
+    var rcpw by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
+
+
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 24.dp, vertical = 16.dp),
+            .padding(horizontal = 24.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         // Back button
-        Box(
+        Row(
             modifier = Modifier
-                .size(41.dp)
-                .background(Color.White, shape = RoundedCornerShape(12.dp))
-                .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
-                .clickable { (context as? ComponentActivity)?.finish() },
-            contentAlignment = Alignment.Center
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Box(
+                modifier = Modifier
+                    .size(41.dp)
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .border(
+                        BorderStroke(1.dp, Color(0xFFE8ECF4)),
+                        shape = RoundedCornerShape(12.dp)
+                    )
+                    .clickable { (context as? ComponentActivity)?.finish() },
+                contentAlignment = Alignment.Center
+            ) {
+                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            }
+        }
+
+        Spacer(modifier = Modifier.height(36.dp))
+
+        Text("환경설정", fontSize = 16.sp, fontWeight = FontWeight.Bold)
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        LoginTextField(label = " 비밀번호 변경", value = pw, onValueChange = { pw = it}, withDivider = true, placeHolder = "현재 비밀번호 입력")
+        LoginTextField(label = " 새로운 비밀번호 입력 ", value = cpw, onValueChange = { pw = it }, password = true, withDivider = true)
+        LoginTextField(label = " 새로운 비밀번호 확인 ", value = rcpw, onValueChange = { rcpw = it }, password = true, withDivider = true)
+
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "  성별 ",
+                fontSize = 14.sp,
+                color = Color(0xFF828282)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+
+            Divider(
+                color = Color(0xFFE6E6E6),
+                modifier = Modifier
+                    .height(1.dp)
+                    .weight(1f) // 남은 공간을 차지하게 만듦
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
+            GenderButton("남성", gender == "남성") { gender = it }
+            GenderButton("여성", gender == "여성") { gender = it }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true)
+
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "  선호 노래 장르 설정 ",
+                fontSize = 14.sp,
+                color = Color(0xFF828282)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+
+            Divider(
+                color = Color(0xFFE6E6E6),
+                modifier = Modifier
+                    .height(1.dp)
+                    .weight(1f) // 남은 공간을 차지하게 만듦
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .width(54.dp)
+                    .height(32.dp)
+                    .background(
+                        Color.Black,
+                        shape = CircleShape
+                    )
+                    .border(
+                        width = 0.dp,
+                        color = Color(0xFFE6E6E6),
+                        shape = CircleShape
+                    )
+                    .clickable {  },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "확인",
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "  노래 리스트 설정 ",
+                fontSize = 14.sp,
+                color = Color(0xFF828282)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+
+            Divider(
+                color = Color(0xFFE6E6E6),
+                modifier = Modifier
+                    .height(1.dp)
+                    .weight(1f) // 남은 공간을 차지하게 만듦
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()) {
+            Box(
+                modifier = Modifier
+                    .width(54.dp)
+                    .height(32.dp)
+                    .background(
+                        Color.Black,
+                        shape = CircleShape
+                    )
+                    .border(
+                        width =  0.dp,
+                        color = Color(0xFFE6E6E6),
+                        shape = CircleShape
+                    )
+                    .clickable {  },
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "확인",
+                    color = Color.White,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium
+                )
+            }
         }
 
         Spacer(modifier = Modifier.height(24.dp))
-
-        Text("환경설정", fontSize = 16.sp, fontWeight = FontWeight.SemiBold)
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        SettingsOption("비밀번호 변경")
-        SettingsOption("새로운 비밀번호 입력", isPassword = true)
-        SettingsOption("새로운 비밀번호 확인", isPassword = true)
-
-        Spacer(modifier = Modifier.height(24.dp))
-
         Button(
-            onClick = { /* 확인 동작 */ },
+            onClick = {
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),
@@ -78,24 +228,7 @@ fun SettingsScreen() {
         ) {
             Text("확인", color = Color.White, fontSize = 14.sp)
         }
+
     }
 }
 
-@Composable
-fun SettingsOption(label: String, isPassword: Boolean = false) {
-    OutlinedTextField(
-        value = "",
-        onValueChange = {},
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(56.dp),
-        shape = RoundedCornerShape(8.dp),
-        label = { Text(label) },
-        colors = OutlinedTextFieldDefaults.colors(
-            focusedBorderColor = Color(0xFFE0E0E0),
-            unfocusedBorderColor = Color(0xFFE0E0E0)
-        ),
-        visualTransformation = if (isPassword) PasswordVisualTransformation() else VisualTransformation.None,
-        singleLine = true
-    )
-}

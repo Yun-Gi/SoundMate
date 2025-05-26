@@ -1,5 +1,7 @@
 package com.example.soundmate
 
+import UserInfoRequest
+import UserInfoResponse
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -20,8 +22,12 @@ import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
-
-
+import com.google.firebase.auth.FirebaseAuth
+import android.widget.Toast
+import com.google.firebase.auth.EmailAuthProvider
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 class Settings : ComponentActivity() {
@@ -38,13 +44,37 @@ class Settings : ComponentActivity() {
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
-    var gender by remember { mutableStateOf("남성") }
+    var gender by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
     var cpw by remember { mutableStateOf("") }
     var rcpw by remember { mutableStateOf("") }
     var age by remember { mutableStateOf("") }
 
+    // 기존 유저 설정 띄우기 용 유저정보 가져와야 함
+    val firebaseAuth = FirebaseAuth.getInstance()
+    val user = firebaseAuth.currentUser
+    val userId = user?.uid ?: ""
 
+    LaunchedEffect(userId) {
+        if (userId.isNotEmpty()) {
+            RetrofitInstance.api.getUserInfo(userId).enqueue(object : retrofit2.Callback<UserInfoResponse> {
+                override fun onResponse(call: Call<UserInfoResponse>, response: retrofit2.Response<UserInfoResponse>) {
+                    if (response.isSuccessful) {
+                        response.body()?.let {
+                            gender = it.gender
+                            age = it.age.toString()
+                        }
+                    } else {
+                        Toast.makeText(context, "유저 정보 불러오기 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                    Toast.makeText(context, "서버 연결 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -219,6 +249,61 @@ fun SettingsScreen() {
         Spacer(modifier = Modifier.height(24.dp))
         Button(
             onClick = {
+                if (pw.isNotEmpty()) {
+                    val credential = EmailAuthProvider.getCredential(user?.email ?: "", pw)
+                    user?.reauthenticate(credential)?.addOnCompleteListener { authTask ->
+                        if (authTask.isSuccessful) {
+                            if (cpw == rcpw) {
+                                user.updatePassword(cpw).addOnCompleteListener { updateTask ->
+                                    if (updateTask.isSuccessful) {
+                                        Toast.makeText(context, "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show()
+
+                                        // 비밀번호 변경 후 유저 정보 업데이트
+                                        val request = UserInfoRequest(gender = gender, age = age.toIntOrNull() ?: 0)
+                                        RetrofitInstance.api.updateUserInfo(user.uid, request)
+                                            .enqueue(object : Callback<Void> {
+                                                override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                                    if (response.isSuccessful) {
+                                                        Toast.makeText(context, "정보가 저장되었습니다", Toast.LENGTH_SHORT).show()
+                                                    } else {
+                                                        Toast.makeText(context, "정보 저장 실패", Toast.LENGTH_SHORT).show()
+                                                    }
+                                                }
+
+                                                override fun onFailure(call: Call<Void>, t: Throwable) {
+                                                    Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                                                }
+                                            })
+
+                                    } else {
+                                        Toast.makeText(context, "비밀번호 변경 실패", Toast.LENGTH_SHORT).show()
+                                    }
+                                }
+                            } else {
+                                Toast.makeText(context, "새 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                            }
+                        } else {
+                            Toast.makeText(context, "현재 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                } else {
+                    // 비밀번호 변경 없이 정보만 저장
+                    val request = UserInfoRequest(gender = gender, age = age.toIntOrNull() ?: 0)
+                    RetrofitInstance.api.updateUserInfo(userId, request)
+                        .enqueue(object : Callback<Void> {
+                            override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                if (response.isSuccessful) {
+                                    Toast.makeText(context, "정보가 저장되었습니다", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    Toast.makeText(context, "정보 저장 실패", Toast.LENGTH_SHORT).show()
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Void>, t: Throwable) {
+                                Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                }
             },
             modifier = Modifier
                 .fillMaxWidth()

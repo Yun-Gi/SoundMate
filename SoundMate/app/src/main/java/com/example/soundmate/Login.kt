@@ -25,9 +25,14 @@ import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
-import androidx.compose.ui.layout.ContentScale
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
+import com.google.firebase.auth.GoogleAuthProvider
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,6 +51,28 @@ fun LoginScreen() {
     var id by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
     val firebaseAuth: FirebaseAuth = FirebaseAuth.getInstance()
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+        try {
+            val account = task.getResult(ApiException::class.java)
+            val credential = GoogleAuthProvider.getCredential(account.idToken, null)
+            firebaseAuth.signInWithCredential(credential)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(context, "구글 로그인 성공", Toast.LENGTH_SHORT).show()
+                        context.startActivity(Intent(context, ChatScreen::class.java))
+                    } else {
+                        Toast.makeText(context, "구글 로그인 실패", Toast.LENGTH_SHORT).show()
+                    }
+                }
+        } catch (e: ApiException) {
+            Toast.makeText(context, "구글 계정 처리 오류: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -107,6 +134,8 @@ fun LoginScreen() {
                             if (task.isSuccessful) {
                                 Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
                                 // 로그인 성공 시 다음 화면으로 이동
+                                val intent = Intent(context, ChatScreen::class.java)
+                                context.startActivity(intent)
                             } else {
                                 Toast.makeText(context, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                             }
@@ -153,8 +182,18 @@ fun LoginScreen() {
         }
         Spacer(modifier = Modifier.height(16.dp))
 
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(context.getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        val googleSignInClient = GoogleSignIn.getClient(context, gso)
+
         Button(
-            onClick = { /* Google Login */ },
+            onClick = {
+                val signInIntent = googleSignInClient.signInIntent
+                launcher.launch(signInIntent)
+            },
             modifier = Modifier.size(56.dp),
             shape = RoundedCornerShape(8.dp),
             colors = ButtonDefaults.buttonColors(containerColor = Color.White)

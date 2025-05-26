@@ -13,6 +13,11 @@ public class UserInfoDTO {
         this.genre = genre;
     }
 
+    public UserInfoDTO(String gender, int age) {
+        this.gender = gender;
+        this.age = age;
+    }
+
     public String getGender() { return gender; }
     public void setGender(String gender) { this.gender = gender; }
 

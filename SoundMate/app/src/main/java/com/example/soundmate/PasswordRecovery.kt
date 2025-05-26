@@ -2,6 +2,7 @@ package com.example.soundmate
 
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -17,10 +18,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
+import com.google.firebase.auth.FirebaseAuth
 
 class PasswordRecovery : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +78,21 @@ fun PasswordRecoveryScreen() {
 
         Spacer(modifier = Modifier.height(24.dp))
         Button(
-            onClick = { /* 확인 동작 */ },
+            onClick = {
+                if (email.isNotEmpty()) {
+                    FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Toast.makeText(context, "비밀번호 재설정 이메일을 전송했습니다.", Toast.LENGTH_SHORT).show()
+                                // 비밀번호 재설정으로
+                            } else {
+                                Toast.makeText(context, "전송 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                } else {
+                    Toast.makeText(context, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                }
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(48.dp),

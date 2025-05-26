@@ -86,4 +86,18 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원가입 실패: " + e.getMessage());
         }
     }
+
+    // 유저 정보 조회
+    @GetMapping("/info")
+    public ResponseEntity<?> getUserInfo(@RequestParam String id) {
+        Optional<User> user = userService.findUserById(id);
+        if (user.isPresent()) {
+            Map<String, Object> response = new HashMap<>();
+            response.put("gender", user.get().getGender());
+            response.put("age", user.get().getAge());
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
 }

@@ -78,7 +78,7 @@ fun SettingsScreen() {
                 }
 
                 override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
-                    Toast.makeText(context, "서버 연결 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "서버 연결 오류", Toast.LENGTH_SHORT).show()
                 }
             })
         }

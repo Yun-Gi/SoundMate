@@ -39,6 +39,8 @@ import com.google.firebase.auth.GoogleAuthProvider
 import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Callback
+import com.example.soundmate.AlertUtil
+
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,7 +101,7 @@ fun LoginScreen() {
                                         }
 
                                         override fun onFailure(call: Call<Void>, t: Throwable) {
-                                            Toast.makeText(context, "서버 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, "서버 오류", Toast.LENGTH_SHORT).show()
                                         }
                                     })
                                 }
@@ -114,7 +116,7 @@ fun LoginScreen() {
                     }
                 }
         } catch (e: ApiException) {
-            Toast.makeText(context, "구글 계정 처리 오류: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "구글 계정 처리 오류", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -176,12 +178,12 @@ fun LoginScreen() {
                     firebaseAuth.signInWithEmailAndPassword(id, pw)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                Toast.makeText(context, "로그인 성공", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "로그인 성공", R.drawable.lcon)
                                 // 로그인 성공 시 다음 화면으로 이동
-                                val intent = Intent(context, ChatScreen::class.java)
-                                context.startActivity(intent)
+                                //val intent = Intent(context, ChatScreen::class.java)
+                                //context.startActivity(intent)
                             } else {
-                                Toast.makeText(context, "로그인 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
                             }
                         }
                 } else {

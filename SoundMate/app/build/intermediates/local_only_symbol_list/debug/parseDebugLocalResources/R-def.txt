@@ -8,6 +8,7 @@ color teal_200
 color teal_700
 color white
 drawable back
+drawable circle_mask
 drawable google
 drawable googlelogo
 drawable googlelogo2
@@ -15,6 +16,7 @@ drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable lcon
 drawable logo
+drawable rounded_toast_bg
 mipmap ic_launcher
 mipmap ic_launcher_round
 string app_name

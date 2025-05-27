@@ -43,7 +43,7 @@
         <activity android:name="com.example.soundmate.Signup" />
         <activity android:name="com.example.soundmate.PasswordRecovery" />
         <activity
-            android:name="com.example.soundmate.AutoLoginActivity"
+            android:name="com.example.soundmate.MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SoundMate" >

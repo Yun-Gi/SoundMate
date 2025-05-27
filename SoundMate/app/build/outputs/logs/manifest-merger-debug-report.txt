@@ -256,7 +256,7 @@ activity#com.example.soundmate.PasswordRecovery
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:20:9-54
 	android:name
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:20:19-51
-activity#com.example.soundmate.AutoLoginActivity
+activity#com.example.soundmate.MainActivity
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:label
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:24:13-45
@@ -265,7 +265,7 @@ ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:theme
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:25:13-51
 	android:name
-		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-46
+		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-41
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN

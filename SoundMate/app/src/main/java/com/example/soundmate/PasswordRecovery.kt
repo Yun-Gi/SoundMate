@@ -84,7 +84,7 @@ fun PasswordRecoveryScreen() {
                                 Toast.makeText(context, "비밀번호 재설정 이메일을 전송했습니다.", Toast.LENGTH_SHORT).show()
                                 // 비밀번호 재설정으로
                             } else {
-                                Toast.makeText(context, "전송 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "전송 실패", Toast.LENGTH_SHORT).show()
                             }
                         }
                 } else {

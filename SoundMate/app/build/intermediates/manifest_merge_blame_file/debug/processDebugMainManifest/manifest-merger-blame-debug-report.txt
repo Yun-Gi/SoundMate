@@ -85,8 +85,8 @@
 44-->E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:20:19-51
 45        <activity
 45-->E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:21:9-31:20
-46            android:name="com.example.soundmate.AutoLoginActivity"
-46-->E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-46
+46            android:name="com.example.soundmate.MainActivity"
+46-->E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-41
 47            android:exported="true"
 47-->E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:23:13-36
 48            android:label="@string/app_name"

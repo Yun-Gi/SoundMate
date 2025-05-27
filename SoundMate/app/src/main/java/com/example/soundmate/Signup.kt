@@ -152,16 +152,16 @@ fun SignupScreen() {
                                             val intent = Intent(context, Login::class.java)
                                             context.startActivity(intent)
                                         } else {
-                                            Toast.makeText(context, "서버 저장 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(context, "서버 저장 실패", Toast.LENGTH_SHORT).show()
                                         }
                                     }
 
                                     override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
-                                        Toast.makeText(context, "서버 연결 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                                        Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
                                     }
                                 })
                             } else {
-                                Toast.makeText(context, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context, "회원가입 실패", Toast.LENGTH_SHORT).show()
                             }
                         }
                 } else {

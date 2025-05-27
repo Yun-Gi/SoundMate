@@ -2,6 +2,7 @@ package com.example.soundmate
 
 import UserInfoRequest
 import UserInfoResponse
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -24,6 +25,12 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.shape.CircleShape
 import com.google.firebase.auth.FirebaseAuth
 import android.widget.Toast
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import com.google.firebase.auth.EmailAuthProvider
 import retrofit2.Call
 import retrofit2.Callback
@@ -44,6 +51,7 @@ class Settings : ComponentActivity() {
 @Composable
 fun SettingsScreen() {
     val context = LocalContext.current
+    val scrollState = rememberScrollState()
     var gender by remember { mutableStateOf("") }
     var pw by remember { mutableStateOf("") }
     var cpw by remember { mutableStateOf("") }
@@ -79,6 +87,7 @@ fun SettingsScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(scrollState)
             .padding(horizontal = 24.dp, vertical = 32.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -89,19 +98,15 @@ fun SettingsScreen() {
                 .padding(top = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
+                contentDescription = "뒤로가기",
                 modifier = Modifier
                     .size(41.dp)
                     .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .border(
-                        BorderStroke(1.dp, Color(0xFFE8ECF4)),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .clickable { (context as? ComponentActivity)?.finish() },
-                contentAlignment = Alignment.Center
-            ) {
-                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            }
+                    .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
+                    .clickable { (context as? ComponentActivity)?.finish() }
+            )
         }
 
         Spacer(modifier = Modifier.height(36.dp))
@@ -111,8 +116,8 @@ fun SettingsScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         LoginTextField(label = " 비밀번호 변경", value = pw, onValueChange = { pw = it}, withDivider = true, placeHolder = "현재 비밀번호 입력")
-        LoginTextField(label = " 새로운 비밀번호 입력 ", value = cpw, onValueChange = { pw = it }, password = true, withDivider = true)
-        LoginTextField(label = " 새로운 비밀번호 확인 ", value = rcpw, onValueChange = { rcpw = it }, password = true, withDivider = true)
+        LoginTextField(label = " 새로운 비밀번호 입력 ", value = cpw, onValueChange = { pw = it }, password = true, withDivider = true, placeHolder = "비밀번호는 다음 중 3가지를 만족해야 합니다.")
+        LoginTextField(label = " 새로운 비밀번호 확인 ", value = rcpw, onValueChange = { rcpw = it }, password = true, withDivider = true, placeHolder = "8자 이상, 대소문자, 숫자, 특수문자")
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -144,7 +149,7 @@ fun SettingsScreen() {
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true)
+        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -246,7 +251,28 @@ fun SettingsScreen() {
             }
         }
 
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "  저장 하기 ",
+                fontSize = 14.sp,
+                color = Color(0xFF828282)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+
+            Divider(
+                color = Color(0xFFE6E6E6),
+                modifier = Modifier
+                    .height(1.dp)
+                    .weight(1f) // 남은 공간을 차지하게 만듦
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
         Button(
             onClick = {
                 if (pw.isNotEmpty()) {
@@ -254,6 +280,10 @@ fun SettingsScreen() {
                     user?.reauthenticate(credential)?.addOnCompleteListener { authTask ->
                         if (authTask.isSuccessful) {
                             if (cpw == rcpw) {
+                                if (!isValidPassword(cpw)) {
+                                    Toast.makeText(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", Toast.LENGTH_LONG).show()
+                                    return@addOnCompleteListener
+                                }
                                 user.updatePassword(cpw).addOnCompleteListener { updateTask ->
                                     if (updateTask.isSuccessful) {
                                         Toast.makeText(context, "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show()
@@ -314,6 +344,48 @@ fun SettingsScreen() {
             Text("확인", color = Color.White, fontSize = 14.sp)
         }
 
+        Spacer(modifier = Modifier.height(12.dp))
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            Text(
+                text = "  로그아웃 하기 ",
+                fontSize = 14.sp,
+                color = Color(0xFF828282)
+            )
+
+            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+
+            Divider(
+                color = Color(0xFFE6E6E6),
+                modifier = Modifier
+                    .height(1.dp)
+                    .weight(1f) // 남은 공간을 차지하게 만듦
+            )
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(
+            onClick = {
+                FirebaseAuth.getInstance().signOut() // 로그아웃 처리
+
+                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+
+                // 로그인 화면으로 이동
+                val intent = Intent(context, Login::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK // 뒤로가기 방지
+                context.startActivity(intent)
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(48.dp),
+            shape = RoundedCornerShape(8.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0XFFEEEEEE))
+        ) {
+            Text("로그아웃", color = Color.Black, fontSize = 14.sp)
+        }
+        Spacer(modifier = Modifier.height(20.dp))
     }
 }
 

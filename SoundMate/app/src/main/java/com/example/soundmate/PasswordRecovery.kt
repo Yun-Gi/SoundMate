@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,6 +22,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
+import androidx.compose.ui.res.painterResource
 import com.google.firebase.auth.FirebaseAuth
 
 class PasswordRecovery : ComponentActivity() {
@@ -52,19 +54,15 @@ fun PasswordRecoveryScreen() {
                 .padding(top = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
+                contentDescription = "뒤로가기",
                 modifier = Modifier
                     .size(41.dp)
                     .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .border(
-                        BorderStroke(1.dp, Color(0xFFE8ECF4)),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .clickable { (context as? ComponentActivity)?.finish() },
-                contentAlignment = Alignment.Center
-            ) {
-                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            }
+                    .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
+                    .clickable { (context as? ComponentActivity)?.finish() }
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))

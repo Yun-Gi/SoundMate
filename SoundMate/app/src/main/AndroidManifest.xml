@@ -19,7 +19,7 @@
         <activity android:name=".Signup" />
         <activity android:name=".PasswordRecovery" />
         <activity
-            android:name=".MainActivity"
+            android:name=".AutoLoginActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SoundMate">

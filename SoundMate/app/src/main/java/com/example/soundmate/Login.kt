@@ -1,5 +1,7 @@
 package com.example.soundmate
 
+import GoogleRegisterRequest
+import UserInfoResponse
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -29,10 +31,14 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.ui.res.painterResource
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.text.KeyboardOptions
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.GoogleAuthProvider
+import retrofit2.Call
+import retrofit2.Response
+import retrofit2.Callback
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,8 +68,47 @@ fun LoginScreen() {
             firebaseAuth.signInWithCredential(credential)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Toast.makeText(context, "구글 로그인 성공", Toast.LENGTH_SHORT).show()
-                        context.startActivity(Intent(context, ChatScreen::class.java))
+                        val currentUser = firebaseAuth.currentUser
+                        val uid = currentUser?.uid ?: return@addOnCompleteListener
+
+                        // 1. 서버에 UID로 사용자 존재 여부 확인
+                        RetrofitInstance.api.getUserInfo(uid).enqueue(object : Callback<UserInfoResponse> {
+                            override fun onResponse(call: Call<UserInfoResponse>, response: Response<UserInfoResponse>) {
+                                if (response.isSuccessful) {
+                                    // 2-1. 이미 등록된 사용자 → 바로 이동
+                                    Toast.makeText(context, "구글 로그인 성공", Toast.LENGTH_SHORT).show()
+                                    context.startActivity(Intent(context, ChatScreen::class.java))
+                                } else {
+                                    // 2-2. 등록 안 된 사용자 → 서버에 회원가입 요청
+                                    val email = currentUser.email ?: ""
+                                    val displayName = currentUser.displayName ?: ""
+
+                                    val userDto = GoogleRegisterRequest(
+                                        email = email,
+                                        displayName = displayName
+                                    )
+
+                                    RetrofitInstance.api.registerGoogleUser(userDto).enqueue(object : Callback<Void> {
+                                        override fun onResponse(call: Call<Void>, response: Response<Void>) {
+                                            if (response.isSuccessful) {
+                                                Toast.makeText(context, "회원 등록 성공", Toast.LENGTH_SHORT).show()
+                                                context.startActivity(Intent(context, ChatScreen::class.java))
+                                            } else {
+                                                Toast.makeText(context, "회원 등록 실패", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+
+                                        override fun onFailure(call: Call<Void>, t: Throwable) {
+                                            Toast.makeText(context, "서버 오류: ${t.message}", Toast.LENGTH_SHORT).show()
+                                        }
+                                    })
+                                }
+                            }
+
+                            override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
+                                Toast.makeText(context, "서버 연결 오류", Toast.LENGTH_SHORT).show()
+                            }
+                        })
                     } else {
                         Toast.makeText(context, "구글 로그인 실패", Toast.LENGTH_SHORT).show()
                     }
@@ -86,16 +131,15 @@ fun LoginScreen() {
                 .padding(top = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
+                contentDescription = "뒤로가기",
                 modifier = Modifier
                     .size(41.dp)
                     .background(Color.White, shape = RoundedCornerShape(12.dp))
                     .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
-                    .clickable { (context as? ComponentActivity)?.finish() },
-                contentAlignment = Alignment.Center
-            ) {
-                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            }
+                    .clickable { (context as? ComponentActivity)?.finish() }
+            )
         }
 
         Spacer(modifier = Modifier.height(32.dp))
@@ -189,21 +233,16 @@ fun LoginScreen() {
 
         val googleSignInClient = GoogleSignIn.getClient(context, gso)
 
-        Button(
-            onClick = {
-                val signInIntent = googleSignInClient.signInIntent
-                launcher.launch(signInIntent)
-            },
-            modifier = Modifier.size(56.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.White)
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.google), // 여기에 이미지 파일명
-                contentDescription = "Google Login" ,
-                
-            )
-        }
+        Image(
+            painter = painterResource(id = R.drawable.googlelogo2),
+            contentDescription = "Google Login",
+            modifier = Modifier
+                .size(56.dp)
+                .clickable {
+                    val signInIntent = googleSignInClient.signInIntent
+                    launcher.launch(signInIntent)
+                }
+        )
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -243,7 +282,14 @@ fun LoginScreen() {
 
 
 @Composable
-fun LoginTextField(label: String, value: String , onValueChange: (String) -> Unit, password: Boolean = false, withDivider: Boolean = false, placeHolder: String = "") {
+fun LoginTextField(label: String,
+                   value: String ,
+                   onValueChange: (String) -> Unit,
+                   password: Boolean = false,
+                   withDivider: Boolean = false,
+                   placeHolder: String = "",
+                   keyboardOptions: KeyboardOptions = KeyboardOptions.Default
+) {
     Column(modifier = Modifier
         .fillMaxWidth()
         .padding(vertical = 8.dp)) {
@@ -260,7 +306,7 @@ fun LoginTextField(label: String, value: String , onValueChange: (String) -> Uni
             onValueChange = onValueChange,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(48.dp),
+                .height(50.dp),
             shape = RoundedCornerShape(8.dp),
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = Color(0xFFE0E0E0),
@@ -277,10 +323,12 @@ fun LoginTextField(label: String, value: String , onValueChange: (String) -> Uni
                 Text(
                     text = placeHolder,
                     fontSize = 13.sp,
-                    lineHeight = 14.sp, // 줄 간격을 조절하여 잘리지 않도록
-                    color = Color.LightGray
+                    lineHeight = 13.sp,
+                    color = Color(0XFFB0B0B0),
+
                 )
-            }
+            },
+            keyboardOptions = keyboardOptions
         )
     }
 }

@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -23,6 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 import androidx.compose.foundation.border
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.input.KeyboardType
 import com.google.firebase.auth.FirebaseAuth
 
 
@@ -61,19 +65,15 @@ fun SignupScreen() {
                 .padding(top = 12.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Box(
+            Image(
+                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
+                contentDescription = "뒤로가기",
                 modifier = Modifier
                     .size(41.dp)
                     .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .border(
-                        BorderStroke(1.dp, Color(0xFFE8ECF4)),
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .clickable { (context as? ComponentActivity)?.finish() },
-                contentAlignment = Alignment.Center
-            ) {
-                Text("<", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-            }
+                    .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
+                    .clickable { (context as? ComponentActivity)?.finish() }
+            )
         }
 
         Spacer(modifier = Modifier.height(36.dp))
@@ -84,8 +84,8 @@ fun SignupScreen() {
         Spacer(modifier = Modifier.height(8.dp))
 
         LoginTextField(label = " 이메일 ", value = id, onValueChange = { id = it}, withDivider = true)
-        LoginTextField(label = " 비밀번호 ", value = pw, onValueChange = { pw = it }, password = true, withDivider = true)
-        LoginTextField(label = " 비밀번호 확인 ", value = rpw, onValueChange = { rpw = it }, password = true, withDivider = true)
+        LoginTextField(label = " 비밀번호 ", value = pw, onValueChange = { pw = it }, password = true, withDivider = true, placeHolder = "비밀번호는 다음 중 3가지를 만족해야 합니다.")
+        LoginTextField(label = " 비밀번호 확인 ", value = rpw, onValueChange = { rpw = it }, password = true, withDivider = true, placeHolder = "8자 이상, 대소문자, 숫자, 특수문자")
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(
@@ -117,43 +117,53 @@ fun SignupScreen() {
         }
 
         Spacer(modifier = Modifier.height(8.dp))
-        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true)
+        LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
         Spacer(modifier = Modifier.height(24.dp))
         Button(
-            onClick = {
+            onClick = onClick@ {
                 if (id.isNotEmpty() && pw.isNotEmpty()) {
-                    if (pw == rpw) {
-                        firebaseAuth.createUserWithEmailAndPassword(id, pw)
-                            .addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    // Firebase 인증 성공
-                                    val userId = firebaseAuth.currentUser?.uid ?: ""
-                                    val user = User(email = id, gender = gender, age = age.toIntOrNull() ?: 0)
-
-                                    // 회원가입 API 호출 (MySQL 서버에 사용자 정보 저장)
-                                    RetrofitInstance.api.registerUser(user).enqueue(object : retrofit2.Callback<Void> {
-                                        override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
-                                            if (response.isSuccessful) {
-                                                Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                                                val intent = Intent(context, Login::class.java)
-                                                context.startActivity(intent)
-                                            } else {
-                                                Toast.makeText(context, "서버 저장 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
-                                            }
-                                        }
-
-                                        override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
-                                            Toast.makeText(context, "서버 연결 실패: ${t.message}", Toast.LENGTH_SHORT).show()
-                                        }
-                                    })
-                                } else {
-                                    Toast.makeText(context, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
-                                }
-                            }
-                    } else {
+                    if (pw != rpw) {
                         Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                        return@onClick
                     }
+
+                    if (!isValidPassword(pw)) {
+                        Toast.makeText(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", Toast.LENGTH_LONG).show()
+                        return@onClick
+                    }
+
+                    val emailPattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
+                    if (!emailPattern.matches(id)) {
+                        Toast.makeText(context, "올바른 이메일 형식을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        return@onClick
+                    }
+
+                    firebaseAuth.createUserWithEmailAndPassword(id, pw)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val userId = firebaseAuth.currentUser?.uid ?: ""
+                                val user = User(email = id, gender = gender, age = age.toIntOrNull() ?: 0)
+
+                                RetrofitInstance.api.registerUser(user).enqueue(object : retrofit2.Callback<Void> {
+                                    override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
+                                        if (response.isSuccessful) {
+                                            Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                            val intent = Intent(context, Login::class.java)
+                                            context.startActivity(intent)
+                                        } else {
+                                            Toast.makeText(context, "서버 저장 실패: ${response.code()}", Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+
+                                    override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
+                                        Toast.makeText(context, "서버 연결 실패: ${t.message}", Toast.LENGTH_SHORT).show()
+                                    }
+                                })
+                            } else {
+                                Toast.makeText(context, "회원가입 실패: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
+                            }
+                        }
                 } else {
                     Toast.makeText(context, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
                 }
@@ -230,4 +240,15 @@ fun GenderButton(label: String, selected: Boolean, onClick: (String) -> Unit) {
             fontWeight = FontWeight.Medium
         )
     }
+}
+
+fun isValidPassword(password: String): Boolean {
+    var count = 0
+
+    if (password.length >= 8) count++
+    if (password.any { it.isUpperCase() } && password.any { it.isLowerCase() }) count++
+    if (password.any { it.isDigit() }) count++
+    if (password.any { "!@#\$%^&*()_+-=[]|{};':\",./<>?".contains(it) }) count++
+
+    return count >= 3
 }

@@ -81,14 +81,14 @@ fun PasswordRecoveryScreen() {
                     FirebaseAuth.getInstance().sendPasswordResetEmail(email)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                Toast.makeText(context, "비밀번호 재설정 이메일을 전송했습니다.", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "비밀번호 재설정 이메일을 전송했습니다", R.drawable.check_10302427)
                                 // 비밀번호 재설정으로
                             } else {
-                                Toast.makeText(context, "전송 실패", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "전송 실패", R.drawable.remove_1828843)
                             }
                         }
                 } else {
-                    Toast.makeText(context, "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    AlertUtil.showCustomToast(context, "이메일을 입력해주세요", R.drawable.remove_1828843)
                 }
             },
             modifier = Modifier

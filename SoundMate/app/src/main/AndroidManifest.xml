@@ -30,6 +30,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".ChatScreen" />
+        <activity android:name=".Settings" />
+        <activity android:name=".SongListSetting" />
     </application>
 
 

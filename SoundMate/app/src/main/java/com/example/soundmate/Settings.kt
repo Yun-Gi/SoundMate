@@ -73,12 +73,12 @@ fun SettingsScreen() {
                             age = it.age.toString()
                         }
                     } else {
-                        Toast.makeText(context, "유저 정보 불러오기 실패", Toast.LENGTH_SHORT).show()
+                        AlertUtil.showCustomToast(context, "유저 정보 불러오기 실패", R.drawable.remove_1828843)
                     }
                 }
 
                 override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
-                    Toast.makeText(context, "서버 연결 오류", Toast.LENGTH_SHORT).show()
+                    AlertUtil.showCustomToast(context, "서버 연결 오류", R.drawable.remove_1828843)
                 }
             })
         }
@@ -239,7 +239,10 @@ fun SettingsScreen() {
                         color = Color(0xFFE6E6E6),
                         shape = CircleShape
                     )
-                    .clickable {  },
+                    .clickable {
+                        val intent = Intent(context, SongListSetting::class.java)
+                        context.startActivity(intent)
+                    },
                 contentAlignment = Alignment.Center
             ) {
                 Text(
@@ -281,12 +284,12 @@ fun SettingsScreen() {
                         if (authTask.isSuccessful) {
                             if (cpw == rcpw) {
                                 if (!isValidPassword(cpw)) {
-                                    Toast.makeText(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", Toast.LENGTH_LONG).show()
+                                    AlertUtil.showCustomToast(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", R.drawable.remove_1828843)
                                     return@addOnCompleteListener
                                 }
                                 user.updatePassword(cpw).addOnCompleteListener { updateTask ->
                                     if (updateTask.isSuccessful) {
-                                        Toast.makeText(context, "비밀번호가 변경되었습니다", Toast.LENGTH_SHORT).show()
+                                        AlertUtil.showCustomToast(context, "비밀번호가 변경되었습니다", R.drawable.check_10302427)
 
                                         // 비밀번호 변경 후 유저 정보 업데이트
                                         val request = UserInfoRequest(gender = gender, age = age.toIntOrNull() ?: 0)
@@ -294,26 +297,26 @@ fun SettingsScreen() {
                                             .enqueue(object : Callback<Void> {
                                                 override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                                     if (response.isSuccessful) {
-                                                        Toast.makeText(context, "정보가 저장되었습니다", Toast.LENGTH_SHORT).show()
+                                                        AlertUtil.showCustomToast(context, "정보가 저장되었습니다", R.drawable.check_10302427)
                                                     } else {
-                                                        Toast.makeText(context, "정보 저장 실패", Toast.LENGTH_SHORT).show()
+                                                        AlertUtil.showCustomToast(context, "정보 저장 실패", R.drawable.remove_1828843)
                                                     }
                                                 }
 
                                                 override fun onFailure(call: Call<Void>, t: Throwable) {
-                                                    Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                                                    AlertUtil.showCustomToast(context, "서버 연결 실패", R.drawable.remove_1828843)
                                                 }
                                             })
 
                                     } else {
-                                        Toast.makeText(context, "비밀번호 변경 실패", Toast.LENGTH_SHORT).show()
+                                        AlertUtil.showCustomToast(context, "비밀번호 변경 실패", R.drawable.remove_1828843)
                                     }
                                 }
                             } else {
-                                Toast.makeText(context, "새 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "새 비밀번호가 일치하지 않습니다", R.drawable.remove_1828843)
                             }
                         } else {
-                            Toast.makeText(context, "현재 비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+                            AlertUtil.showCustomToast(context, "현재 비밀번호가 일치하지 않습니다", R.drawable.remove_1828843)
                         }
                     }
                 } else {
@@ -323,14 +326,14 @@ fun SettingsScreen() {
                         .enqueue(object : Callback<Void> {
                             override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                 if (response.isSuccessful) {
-                                    Toast.makeText(context, "정보가 저장되었습니다", Toast.LENGTH_SHORT).show()
+                                    AlertUtil.showCustomToast(context, "정보가 저장되었습니다", R.drawable.check_10302427)
                                 } else {
-                                    Toast.makeText(context, "정보 저장 실패", Toast.LENGTH_SHORT).show()
+                                    AlertUtil.showCustomToast(context, "정보 저장 실패", R.drawable.remove_1828843)
                                 }
                             }
 
                             override fun onFailure(call: Call<Void>, t: Throwable) {
-                                Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "서버 연결 실패", R.drawable.remove_1828843)
                             }
                         })
                 }
@@ -370,7 +373,7 @@ fun SettingsScreen() {
             onClick = {
                 FirebaseAuth.getInstance().signOut() // 로그아웃 처리
 
-                Toast.makeText(context, "로그아웃 되었습니다.", Toast.LENGTH_SHORT).show()
+                AlertUtil.showCustomToast(context, "로그아웃 되었습니다", R.drawable.check_10302427)
 
                 // 로그인 화면으로 이동
                 val intent = Intent(context, Login::class.java)

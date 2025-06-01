@@ -124,18 +124,18 @@ fun SignupScreen() {
             onClick = onClick@ {
                 if (id.isNotEmpty() && pw.isNotEmpty()) {
                     if (pw != rpw) {
-                        Toast.makeText(context, "비밀번호가 일치하지 않습니다.", Toast.LENGTH_SHORT).show()
+                        AlertUtil.showCustomToast(context, "비밀번호가 일치하지 않습니다", R.drawable.remove_1828843)
                         return@onClick
                     }
 
                     if (!isValidPassword(pw)) {
-                        Toast.makeText(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", Toast.LENGTH_LONG).show()
+                        AlertUtil.showCustomToast(context, "비밀번호는 다음 중 3가지를 만족해야 합니다:\n8자 이상, 대소문자, 숫자, 특수문자", R.drawable.remove_1828843)
                         return@onClick
                     }
 
                     val emailPattern = Regex("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")
                     if (!emailPattern.matches(id)) {
-                        Toast.makeText(context, "올바른 이메일 형식을 입력해주세요.", Toast.LENGTH_SHORT).show()
+                        AlertUtil.showCustomToast(context, "올바른 이메일 형식을 입력해주세요", R.drawable.check_10302427)
                         return@onClick
                     }
 
@@ -148,24 +148,24 @@ fun SignupScreen() {
                                 RetrofitInstance.api.registerUser(user).enqueue(object : retrofit2.Callback<Void> {
                                     override fun onResponse(call: retrofit2.Call<Void>, response: retrofit2.Response<Void>) {
                                         if (response.isSuccessful) {
-                                            Toast.makeText(context, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                                            AlertUtil.showCustomToast(context, "회원가입 성공", R.drawable.check_10302427)
                                             val intent = Intent(context, Login::class.java)
                                             context.startActivity(intent)
                                         } else {
-                                            Toast.makeText(context, "서버 저장 실패", Toast.LENGTH_SHORT).show()
+                                            AlertUtil.showCustomToast(context, "서버 저장 실패", R.drawable.remove_1828843)
                                         }
                                     }
 
                                     override fun onFailure(call: retrofit2.Call<Void>, t: Throwable) {
-                                        Toast.makeText(context, "서버 연결 실패", Toast.LENGTH_SHORT).show()
+                                        AlertUtil.showCustomToast(context, "서버 연결 실패", R.drawable.remove_1828843)
                                     }
                                 })
                             } else {
-                                Toast.makeText(context, "회원가입 실패", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "회원가입 실패", R.drawable.remove_1828843)
                             }
                         }
                 } else {
-                    Toast.makeText(context, "이메일과 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    AlertUtil.showCustomToast(context, "이메일과 비밀번호를 입력해주세요", R.drawable.remove_1828843)
                 }
             },
             modifier = Modifier

@@ -78,7 +78,7 @@ fun LoginScreen() {
                             override fun onResponse(call: Call<UserInfoResponse>, response: Response<UserInfoResponse>) {
                                 if (response.isSuccessful) {
                                     // 2-1. 이미 등록된 사용자 → 바로 이동
-                                    Toast.makeText(context, "구글 로그인 성공", Toast.LENGTH_SHORT).show()
+                                    AlertUtil.showCustomToast(context, "로그인 성공", R.drawable.check_10302427)
                                     context.startActivity(Intent(context, ChatScreen::class.java))
                                 } else {
                                     // 2-2. 등록 안 된 사용자 → 서버에 회원가입 요청
@@ -93,30 +93,30 @@ fun LoginScreen() {
                                     RetrofitInstance.api.registerGoogleUser(userDto).enqueue(object : Callback<Void> {
                                         override fun onResponse(call: Call<Void>, response: Response<Void>) {
                                             if (response.isSuccessful) {
-                                                Toast.makeText(context, "회원 등록 성공", Toast.LENGTH_SHORT).show()
+                                                AlertUtil.showCustomToast(context, "회원 등록 성공", R.drawable.check_10302427)
                                                 context.startActivity(Intent(context, ChatScreen::class.java))
                                             } else {
-                                                Toast.makeText(context, "회원 등록 실패", Toast.LENGTH_SHORT).show()
+                                                AlertUtil.showCustomToast(context, "회원 등록 실패", R.drawable.remove_1828843)
                                             }
                                         }
 
                                         override fun onFailure(call: Call<Void>, t: Throwable) {
-                                            Toast.makeText(context, "서버 오류", Toast.LENGTH_SHORT).show()
+                                            AlertUtil.showCustomToast(context, "서버 오류", R.drawable.remove_1828843)
                                         }
                                     })
                                 }
                             }
 
                             override fun onFailure(call: Call<UserInfoResponse>, t: Throwable) {
-                                Toast.makeText(context, "서버 연결 오류", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "서버 연결 오류", R.drawable.remove_1828843)
                             }
                         })
                     } else {
-                        Toast.makeText(context, "구글 로그인 실패", Toast.LENGTH_SHORT).show()
+                        AlertUtil.showCustomToast(context, "로그인 실패", R.drawable.remove_1828843)
                     }
                 }
         } catch (e: ApiException) {
-            Toast.makeText(context, "구글 계정 처리 오류", Toast.LENGTH_SHORT).show()
+            AlertUtil.showCustomToast(context, "구글 계정 처리 오류", R.drawable.remove_1828843)
         }
     }
 
@@ -178,16 +178,15 @@ fun LoginScreen() {
                     firebaseAuth.signInWithEmailAndPassword(id, pw)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                AlertUtil.showCustomToast(context, "로그인 성공", R.drawable.lcon)
-                                // 로그인 성공 시 다음 화면으로 이동
-                                //val intent = Intent(context, ChatScreen::class.java)
-                                //context.startActivity(intent)
+                                AlertUtil.showCustomToast(context, "로그인 성공", R.drawable.check_10302427)
+                                val intent = Intent(context, ChatScreen::class.java)
+                                context.startActivity(intent)
                             } else {
-                                Toast.makeText(context, "로그인 실패", Toast.LENGTH_SHORT).show()
+                                AlertUtil.showCustomToast(context, "로그인 실패", R.drawable.remove_1828843)
                             }
                         }
                 } else {
-                    Toast.makeText(context, "아이디와 비밀번호를 입력해주세요.", Toast.LENGTH_SHORT).show()
+                    AlertUtil.showCustomToast(context, "아이디와 비밀번호를 입력해 주세요", R.drawable.remove_1828843)
                 }
             },
             modifier = Modifier

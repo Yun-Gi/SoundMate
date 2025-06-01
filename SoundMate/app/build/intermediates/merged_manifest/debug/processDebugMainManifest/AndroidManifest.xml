@@ -54,6 +54,8 @@
             </intent-filter>
         </activity>
         <activity android:name="com.example.soundmate.ChatScreen" />
+        <activity android:name="com.example.soundmate.Settings" />
+        <activity android:name="com.example.soundmate.SongListSetting" />
 
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"

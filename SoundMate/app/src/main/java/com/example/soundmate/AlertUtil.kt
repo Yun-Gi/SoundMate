@@ -39,8 +39,9 @@ object AlertUtil {
         // 원형 아이콘 (clipToOutline을 위해 background shape 필요)
         val imageView = ImageView(context).apply {
             setImageResource(iconResId)
-            layoutParams = LinearLayout.LayoutParams(48, 48).apply {
-                rightMargin = 20
+            layoutParams = LinearLayout.LayoutParams(64, 64).apply {
+                rightMargin = 30
+                leftMargin = 30
             }
             scaleType = ImageView.ScaleType.CENTER_CROP
             background = context.getDrawable(R.drawable.circle_mask) // ✅ 원형 마스크 drawable
@@ -51,8 +52,9 @@ object AlertUtil {
         val textView = TextView(context).apply {
             text = message
             setTextColor(Color.WHITE)
-            textSize = 14f
+            textSize = 18f
             gravity = Gravity.CENTER_VERTICAL
+            setPadding(32, 16, 32, 16 )
         }
 
         layout.addView(imageView)

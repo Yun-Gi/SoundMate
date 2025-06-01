@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -23,6 +24,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.platform.LocalContext
 import com.example.soundmate.ui.theme.SoundMateTheme
 
+
 class SongListSetting : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,14 +38,37 @@ class SongListSetting : ComponentActivity() {
 
 @Composable
 fun SongListSettingScreen() {
+    val context = LocalContext.current
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
-    ) {
-        Text("노래 리스트", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+    )
+    {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 12.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
+                contentDescription = "뒤로가기",
+                modifier = Modifier
+                    .size(41.dp)
+                    .background(Color.White, shape = RoundedCornerShape(12.dp))
+                    .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
+                    .clickable { (context as? ComponentActivity)?.finish() }
+            )
+            Spacer(modifier = Modifier.width(16.dp))
+            Text("노래 리스트", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+        }
+        Spacer(modifier = Modifier.height(16.dp))
 
+
+        // 사용자가 선택한 음악
         SongItem("Drowning", "WOODZ", "https://www.youtube.com/watch?v=Nb")
         SongItem("모르시나요", "조째즈", "https://www.youtube.com/watch?v=tfmwbxBKPh0")
         SongItem("미치게 그리워서", "황가람", "https://www.youtube.com/watch?v=EZq-SAnSizw")
@@ -63,6 +88,7 @@ fun SongListSettingScreen() {
     }
 }
 
+//여기에다가 썸네일을 매개변수로 추가하고
 @Composable
 fun SongItem(title: String, artist: String, url: String) {
     Row(

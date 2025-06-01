@@ -34,77 +34,78 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainScreen() {
     val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(Color.White)
     ) {
-        // 상단 앱 이름
+        // ⬆️ 앱 이름 (상단 고정)
         Text(
             text = "SoundMate",
-            fontSize = 20.sp,
+            fontSize = 28.sp,
             fontWeight = FontWeight.SemiBold,
             color = Color.Black,
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 58.dp) // (상단 상태바+헤더 고려)
+                .padding(top = 45.dp)
         )
 
-        // 로고 이미지
+        // 🎧 로고 이미지 (정중앙)
         Image(
             painter = painterResource(id = R.drawable.logo),
             contentDescription = "앱 로고",
             modifier = Modifier
-                .size(width = 312.3.dp, height = 200.dp)
                 .align(Alignment.Center)
+                .fillMaxWidth(0.95f) // 적절히 조절
+                .aspectRatio(1.56f)
         )
 
-        // 로그인 버튼
-        Button(
-            onClick = { /* 로그인 클릭 동작 */
-                val intent = Intent(context, Login::class.java)
-                context.startActivity(intent)
-                      },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Black,
-                contentColor = Color.White
-            ),
-            shape = RoundedCornerShape(8.dp),
+        // ⬇️ 버튼 2개 (하단 고정)
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
-                .padding(bottom = 144.dp) // 버튼 두개 높이 + 간격 고려
-                .width(327.dp)
-                .height(40.dp)
+                .fillMaxWidth()
+                .padding(bottom = 48.dp, start = 32.dp, end = 32.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(
-                text = "로그인",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium
-            )
-        }
+            Button(
+                onClick = {
+                    val intent = Intent(context, Login::class.java)
+                    context.startActivity(intent)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color.Black,
+                    contentColor = Color.White
+                ),
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                Text("로그인", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+            }
 
-        // 회원가입 버튼
-        Button(
-            onClick = { /* 회원가입 클릭 동작 */
-                val intent = Intent(context, Signup::class.java)
-                context.startActivity(intent)
-            },
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFFEEEEEE),
-                contentColor = Color.Black
-            ),
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .padding(bottom = 80.dp) // 로그인 버튼 바로 아래
-                .width(327.dp)
-                .height(40.dp)
-        ) {
-            Text(
-                text = "회원가입",
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Medium
-            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    val intent = Intent(context, Signup::class.java)
+                    context.startActivity(intent)
+                },
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = Color(0xFFEEEEEE),
+                    contentColor = Color.Black
+                ),
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(45.dp)
+            ) {
+                Text("회원가입", fontSize = 18.sp, fontWeight = FontWeight.Medium)
+            }
+            Spacer(modifier = Modifier.height(20.dp))
         }
     }
+
 }

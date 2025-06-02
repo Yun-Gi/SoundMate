@@ -1,10 +1,9 @@
+import RecommendedSongDTO
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.Multipart
-import retrofit2.http.POST
-import retrofit2.http.Part
+import retrofit2.Response
+import retrofit2.http.*
 
 interface ChatApiService {
 
@@ -17,5 +16,26 @@ interface ChatApiService {
 
     @POST("/api/chat/conversation")
     fun analyzeConversation(@Body request: ConversationRequestDTO): Call<ConversationResponseDTO>
+
+    // 추천곡 목록 조회
+    @GET("/api/recommendations/{userId}")
+    suspend fun getRecommendedSongs(@Path("userId") userId: String): List<RecommendedSongDTO>
+
+    // 추천곡 삭제
+    @DELETE("/api/recommendations/{userId}")
+    suspend fun deleteRecommendedSong(
+        @Path("userId") userId: String,
+        @Query("trackName") trackName: String,
+        @Query("artistName") artistName: String
+    ): Response<Void>
+
+    @POST("/api/recommendations/{userId}")
+    fun saveRecommendedSong(
+        @Path("userId") userId: String,
+        @Query("trackName") trackName: String,
+        @Query("artistName") artistName: String,
+        @Query("youtubeUrl") youtubeUrl: String?
+    ): Call<Unit>
+
 
 }

@@ -78,6 +78,7 @@ dimen notification_top_pad
 dimen notification_top_pad_large_text
 drawable abc_vector_test
 drawable back
+drawable check_10302427
 drawable circle_mask
 drawable common_full_open_on_phone
 drawable common_google_signin_btn_icon_dark
@@ -129,6 +130,7 @@ drawable notification_template_icon_bg
 drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
+drawable remove_1828843
 drawable rounded_toast_bg
 drawable setting
 id accessibility_action_clickable_span

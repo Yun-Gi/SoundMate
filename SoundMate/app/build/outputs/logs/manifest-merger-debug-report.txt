@@ -73,15 +73,16 @@ MERGED from [androidx.core:core-ktx:1.13.1] C:\Users\abc99\.gradle\caches\8.11.1
 MERGED from [androidx.core:core:1.13.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\5fd0a2f240a4d01418ec75ca6d522e6c\transformed\core-1.13.1\AndroidManifest.xml:17:1-30:12
 MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\215e693fb4048eda28fbd0cfece4a0c9\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2d4869529f6291bf3f3778a7383f9b9f\transformed\savedstate-1.2.1\AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\44a04a31909d5bebcd1869ec8296f3e7\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\50b211d1136d4ccad1934ecad4dd6556\transformed\lifecycle-viewmodel-2.8.3\AndroidManifest.xml:2:1-5:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\a9d47e46437fc29cab5a20a111f3dd15\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\153584973708b7522773318d2d99dc0e\transformed\lifecycle-livedata-core-ktx-2.8.3\AndroidManifest.xml:2:1-7:12
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\db0e68af0ca0f38952b1af90c0072abe\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\f3084331aeb43ebc7da1a62178ca2bf1\transformed\lifecycle-runtime-release\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-process:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\1e4fbe1c07c4176b244364a3ca741fbe\transformed\lifecycle-process-2.8.3\AndroidManifest.xml:17:1-35:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\054571e7b13850ed8d9c0b6c43050e90\transformed\lifecycle-viewmodel-savedstate-2.8.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\31ba284319fd26c9cd97645b7deee531\transformed\lifecycle-viewmodel-ktx-2.8.3\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\649f9e1b58aacf7dedd367179cd4e2d5\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:2:1-7:12
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\f9d89de7bd7e645d06dace29358f11b8\transformed\lifecycle-livedata-2.8.3\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.compose.runtime:runtime-saveable-android:1.7.0] C:\Users\abc99\.gradle\caches\8.11.1\transforms\b1245da1997f9357f60eea3d970a27b4\transformed\runtime-saveable-release\AndroidManifest.xml:2:1-7:12
@@ -256,7 +257,7 @@ activity#com.example.soundmate.PasswordRecovery
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:20:9-54
 	android:name
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:20:19-51
-activity#com.example.soundmate.MainActivity
+activity#com.example.soundmate.SongListSetting
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:label
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:24:13-45
@@ -265,7 +266,7 @@ ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:21:9-31:20
 	android:theme
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:25:13-51
 	android:name
-		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-41
+		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:22:13-44
 intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:26:13-30:29
 action#android.intent.action.MAIN
@@ -284,10 +285,10 @@ activity#com.example.soundmate.Settings
 ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:33:9-46
 	android:name
 		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:33:19-43
-activity#com.example.soundmate.SongListSetting
-ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:34:9-53
+activity#com.example.soundmate.MainActivity
+ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:34:9-50
 	android:name
-		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:34:19-50
+		ADDED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml:34:19-47
 uses-sdk
 INJECTED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
 INJECTED from E:\SoundMate\SoundMate\app\src\main\AndroidManifest.xml
@@ -430,14 +431,14 @@ MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\abc99\.gradle\ca
 MERGED from [androidx.savedstate:savedstate-ktx:1.2.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\215e693fb4048eda28fbd0cfece4a0c9\transformed\savedstate-ktx-1.2.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2d4869529f6291bf3f3778a7383f9b9f\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
 MERGED from [androidx.savedstate:savedstate:1.2.1] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2d4869529f6291bf3f3778a7383f9b9f\transformed\savedstate-1.2.1\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\44a04a31909d5bebcd1869ec8296f3e7\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\44a04a31909d5bebcd1869ec8296f3e7\transformed\lifecycle-viewmodel-compose-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\50b211d1136d4ccad1934ecad4dd6556\transformed\lifecycle-viewmodel-2.8.3\AndroidManifest.xml:4:5-43
 MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\50b211d1136d4ccad1934ecad4dd6556\transformed\lifecycle-viewmodel-2.8.3\AndroidManifest.xml:4:5-43
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\a9d47e46437fc29cab5a20a111f3dd15\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\a9d47e46437fc29cab5a20a111f3dd15\transformed\lifecycle-viewmodel-release\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\153584973708b7522773318d2d99dc0e\transformed\lifecycle-livedata-core-ktx-2.8.3\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata-core-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\153584973708b7522773318d2d99dc0e\transformed\lifecycle-livedata-core-ktx-2.8.3\AndroidManifest.xml:5:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:20:5-44
-MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\db0e68af0ca0f38952b1af90c0072abe\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-ktx-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\db0e68af0ca0f38952b1af90c0072abe\transformed\lifecycle-runtime-ktx-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\f3084331aeb43ebc7da1a62178ca2bf1\transformed\lifecycle-runtime-release\AndroidManifest.xml:20:5-44
@@ -448,6 +449,8 @@ MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3] C:\Users\a
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-savedstate:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\054571e7b13850ed8d9c0b6c43050e90\transformed\lifecycle-viewmodel-savedstate-2.8.3\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\31ba284319fd26c9cd97645b7deee531\transformed\lifecycle-viewmodel-ktx-2.8.3\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\31ba284319fd26c9cd97645b7deee531\transformed\lifecycle-viewmodel-ktx-2.8.3\AndroidManifest.xml:5:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\2ccd5f5f3be10132e5a2e89ebe88036a\transformed\lifecycle-livedata-core-2.8.3\AndroidManifest.xml:20:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\649f9e1b58aacf7dedd367179cd4e2d5\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-runtime-compose-android:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\649f9e1b58aacf7dedd367179cd4e2d5\transformed\lifecycle-runtime-compose-release\AndroidManifest.xml:5:5-44
 MERGED from [androidx.lifecycle:lifecycle-livedata:2.8.3] C:\Users\abc99\.gradle\caches\8.11.1\transforms\f9d89de7bd7e645d06dace29358f11b8\transformed\lifecycle-livedata-2.8.3\AndroidManifest.xml:20:5-44

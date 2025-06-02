@@ -1,29 +1,29 @@
 package com.example.soundmate
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.AsyncImage
 import com.example.soundmate.ui.theme.SoundMateTheme
-
 
 class SongListSetting : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,76 +37,125 @@ class SongListSetting : ComponentActivity() {
 }
 
 @Composable
-fun SongListSettingScreen() {
-    val context = LocalContext.current
+fun SongListSettingScreen(viewModel: SongListViewModel = viewModel()) {
+    val songList by viewModel.songList.collectAsState()
+    val scrollState = rememberScrollState()
+    val userId = "user123"
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchSongs(userId)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(8.dp)
-    )
-    {
-        Row(
+            .background(Color.White)
+            .verticalScroll(scrollState)
+    ) {
+        AsyncImage(
+            model = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/FeNV6EBnyd/5hg0qw43_expires_30_days.png",
+            contentDescription = null,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 12.dp),
-            verticalAlignment = Alignment.CenterVertically
+                .height(44.dp)
+        )
+
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(16.dp)
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.back), // 이미지 이름에 맞게 변경
-                contentDescription = "뒤로가기",
+            OutlinedButton(
+                onClick = { /* TODO: 뒤로가기 */ },
+                colors = ButtonDefaults.outlinedButtonColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
-                    .size(41.dp)
-                    .background(Color.White, shape = RoundedCornerShape(12.dp))
-                    .border(BorderStroke(1.dp, Color(0xFFE8ECF4)), shape = RoundedCornerShape(12.dp))
-                    .clickable { (context as? ComponentActivity)?.finish() }
+                    .padding(end = 16.dp)
+                    .height(36.dp)
+            ) {
+                AsyncImage(
+                    model = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/FeNV6EBnyd/119bajq9_expires_30_days.png",
+                    contentDescription = null,
+                    modifier = Modifier.size(19.dp)
+                )
+            }
+            Text(
+                "노래 리스트",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.width(16.dp))
-            Text("노래 리스트", fontSize = 20.sp, fontWeight = FontWeight.Bold)
         }
-        Spacer(modifier = Modifier.height(16.dp))
 
-
-        // 사용자가 선택한 음악
-        SongItem("Drowning", "WOODZ", "https://www.youtube.com/watch?v=Nb")
-        SongItem("모르시나요", "조째즈", "https://www.youtube.com/watch?v=tfmwbxBKPh0")
-        SongItem("미치게 그리워서", "황가람", "https://www.youtube.com/watch?v=EZq-SAnSizw")
-        SongItem("Chosen", "Blxst", "https://www.youtube.com/watch?v=qFSb1MabqyE")
-        SongItem("Teeth", "5 Seconds of Summer", "https://www.youtube.com/watch?v=JWeJHN5P-E8")
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        Button(
-            onClick = { /* 확인 동작 */ },
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-            shape = RoundedCornerShape(8.dp),
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
-        ) {
-            Text("확인", color = Color.White, fontSize = 14.sp)
+        songList.forEach { song ->
+            SongItem(
+                title = song.trackName,
+                artist = song.artistName,
+                url = song.youtubeUrl ?: "",
+                onDelete = { viewModel.deleteSong(userId, song) }
+            )
         }
+
+        Spacer(modifier = Modifier.height(40.dp))
     }
 }
 
-//여기에다가 썸네일을 매개변수로 추가하고
 @Composable
-fun SongItem(title: String, artist: String, url: String) {
+fun SongItem(title: String, artist: String, url: String, onDelete: () -> Unit) {
+    val context = LocalContext.current
+
     Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp, vertical = 12.dp)
     ) {
-        Column {
-            Text(title, fontSize = 14.sp, fontWeight = FontWeight.Medium)
-            Text(artist, fontSize = 12.sp, color = Color.Gray)
-            Text(url, fontSize = 10.sp, color = Color(0xFF4285F4))
+        AsyncImage(
+            model = "https://storage.googleapis.com/tagjs-prod.appspot.com/v1/FeNV6EBnyd/2xjr8ae3_expires_30_days.png",
+            contentDescription = null,
+            modifier = Modifier.size(48.dp)
+        )
+
+        Column(
+            modifier = Modifier
+                .padding(start = 16.dp)
+                .weight(1f)
+        ) {
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Text(
+                    text = title,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 14.sp,
+                    modifier = Modifier.padding(end = 8.dp)
+                )
+                Text(artist, fontSize = 12.sp)
+            }
+
+            if (url.isNotBlank()) {
+                Text(
+                    text = url.take(40) + if (url.length > 40) "..." else "",
+                    fontSize = 10.sp,
+                    color = Color(0xFF4285F4),
+                    modifier = Modifier.clickable {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
+                    }
+                )
+            }
         }
 
-        Button(
-            onClick = { /* 삭제 동작 */ },
-            colors = ButtonDefaults.buttonColors(containerColor = Color.Black)
+        OutlinedButton(
+            onClick = onDelete,
+            colors = ButtonDefaults.outlinedButtonColors(
+                containerColor = Color.Black,
+                contentColor = Color.White
+            ),
+            shape = RoundedCornerShape(8.dp),
+            modifier = Modifier
+                .height(36.dp)
         ) {
-            Text("삭제", color = Color.White, fontSize = 14.sp)
+            Text("삭제", fontSize = 14.sp, fontWeight = FontWeight.Bold)
         }
     }
 }

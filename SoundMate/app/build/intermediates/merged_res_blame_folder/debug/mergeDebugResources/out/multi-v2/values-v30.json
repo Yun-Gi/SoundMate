@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.soundmate.app-mergeDebugResources-60:/values-v30/values-v30.xml",
+            "outputFile": "com.example.soundmate.app-mergeDebugResources-61:/values-v30/values-v30.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abc99\\.gradle\\caches\\8.11.1\\transforms\\77df6fd5a846e18d336046749db5bfb7\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",

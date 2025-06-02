@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.soundmate.app-mergeDebugResources-60:/values-v21/values-v21.xml",
+            "outputFile": "com.example.soundmate.app-mergeDebugResources-61:/values-v21/values-v21.xml",
             "map": [
                 {
                     "source": "C:\\Users\\abc99\\.gradle\\caches\\8.11.1\\transforms\\1658a8944c28c4b070f77c9352fae3cb\\transformed\\credentials-play-services-auth-1.2.0-rc01\\res\\values-v21\\values-v21.xml",

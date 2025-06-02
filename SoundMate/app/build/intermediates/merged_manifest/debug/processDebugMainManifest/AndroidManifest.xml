@@ -43,7 +43,7 @@
         <activity android:name="com.example.soundmate.Signup" />
         <activity android:name="com.example.soundmate.PasswordRecovery" />
         <activity
-            android:name="com.example.soundmate.MainActivity"
+            android:name="com.example.soundmate.SongListSetting"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.SoundMate" >
@@ -55,7 +55,7 @@
         </activity>
         <activity android:name="com.example.soundmate.ChatScreen" />
         <activity android:name="com.example.soundmate.Settings" />
-        <activity android:name="com.example.soundmate.SongListSetting" />
+        <activity android:name="com.example.soundmate.MainActivity" />
 
         <service
             android:name="com.google.firebase.components.ComponentDiscoveryService"

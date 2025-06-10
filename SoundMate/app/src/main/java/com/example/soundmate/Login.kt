@@ -4,6 +4,7 @@ import GoogleRegisterRequest
 import UserInfoResponse
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.BorderStroke
@@ -96,6 +97,7 @@ fun LoginScreen() {
                                                 AlertUtil.showCustomToast(context, "회원 등록 성공", R.drawable.check_10302427)
                                                 context.startActivity(Intent(context, ChatScreen::class.java))
                                             } else {
+                                                Log.e("회원 등록 실패", "code: ${response.code()}, error: ${response.errorBody()?.string()}")
                                                 AlertUtil.showCustomToast(context, "회원 등록 실패", R.drawable.remove_1828843)
                                             }
                                         }

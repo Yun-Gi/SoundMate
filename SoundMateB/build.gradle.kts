@@ -46,3 +46,13 @@ dependencies {
 tasks.withType<Test> {
 	useJUnitPlatform()
 }
+
+tasks.processResources {
+    from("src/main/resources") {
+        include("**/*.json")
+    }
+}
+
+tasks.withType<JavaCompile> {
+    options.compilerArgs.add("-parameters")
+}

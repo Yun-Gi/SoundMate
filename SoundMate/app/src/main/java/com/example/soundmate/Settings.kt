@@ -151,55 +151,55 @@ fun SettingsScreen() {
         Spacer(modifier = Modifier.height(8.dp))
         LoginTextField(label = " 나이 ", value = age, onValueChange = { age = it }, withDivider = true, keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number))
 
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
-        ) {
-            Text(
-                text = "  선호 노래 장르 설정 ",
-                fontSize = 14.sp,
-                color = Color(0xFF828282)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
-
-            Divider(
-                color = Color(0xFFE6E6E6),
-                modifier = Modifier
-                    .height(1.dp)
-                    .weight(1f) // 남은 공간을 차지하게 만듦
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
-            verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier.fillMaxWidth()) {
-            Box(
-                modifier = Modifier
-                    .width(54.dp)
-                    .height(32.dp)
-                    .background(
-                        Color.Black,
-                        shape = CircleShape
-                    )
-                    .border(
-                        width = 0.dp,
-                        color = Color(0xFFE6E6E6),
-                        shape = CircleShape
-                    )
-                    .clickable {  },
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "확인",
-                    color = Color.White,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Row(
+//            verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//        ) {
+//            Text(
+//                text = "  선호 노래 장르 설정 ",
+//                fontSize = 14.sp,
+//                color = Color(0xFF828282)
+//            )
+//
+//            Spacer(modifier = Modifier.width(8.dp)) // 텍스트와 구분선 사이 간격
+//
+//            Divider(
+//                color = Color(0xFFE6E6E6),
+//                modifier = Modifier
+//                    .height(1.dp)
+//                    .weight(1f) // 남은 공간을 차지하게 만듦
+//            )
+//        }
+//        Spacer(modifier = Modifier.height(8.dp))
+//        Row(horizontalArrangement = Arrangement.spacedBy(16.dp, Alignment.Start),
+//            verticalAlignment = Alignment.CenterVertically,
+//            modifier = Modifier.fillMaxWidth()) {
+//            Box(
+//                modifier = Modifier
+//                    .width(54.dp)
+//                    .height(32.dp)
+//                    .background(
+//                        Color.Black,
+//                        shape = CircleShape
+//                    )
+//                    .border(
+//                        width = 0.dp,
+//                        color = Color(0xFFE6E6E6),
+//                        shape = CircleShape
+//                    )
+//                    .clickable {  },
+//                contentAlignment = Alignment.Center
+//            ) {
+//                Text(
+//                    text = "확인",
+//                    color = Color.White,
+//                    fontSize = 14.sp,
+//                    fontWeight = FontWeight.Medium
+//                )
+//            }
+//        }
 
         Spacer(modifier = Modifier.height(8.dp))
         Row(

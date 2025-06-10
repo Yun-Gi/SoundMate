@@ -51,7 +51,7 @@ interface UserService {
 }
 
 object RetrofitInstance {
-    private const val BASE_URL = "https://your-server-domain.com"
+    private const val BASE_URL = "http://10.0.2.2:8080"
 
     val api: UserService by lazy {
         Retrofit.Builder()

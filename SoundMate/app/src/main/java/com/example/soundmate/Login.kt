@@ -87,6 +87,7 @@ fun LoginScreen() {
                                     val displayName = currentUser.displayName ?: ""
 
                                     val userDto = GoogleRegisterRequest(
+                                        uid = uid,
                                         email = email,
                                         displayName = displayName
                                     )

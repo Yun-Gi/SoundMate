@@ -106,7 +106,7 @@ public class UserController {
 
     // 유저 정보 수정
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserInfoDTO userInfo) {
+    public ResponseEntity<?> updateUser(@PathVariable("id") String id, @RequestBody UserInfoDTO userInfo) {
         Optional<User> userOptional = userService.findUserById(id);
         if (userOptional.isPresent()) {
             User user = userOptional.get();

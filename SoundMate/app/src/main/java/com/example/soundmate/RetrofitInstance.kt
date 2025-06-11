@@ -25,10 +25,10 @@ data class UserInfoRequest(
 )
 
 data class GoogleRegisterRequest(
+    val uid: String,                  // 필수!
     val email: String,
-    val password: String = "GOOGLE_USER",  // Firebase만 쓰는 용도
     val displayName: String,
-    val gender: String = "미설정", // 기본값
+    val gender: String = "미설정",
     val age: Int = -1
 )
 
@@ -45,7 +45,7 @@ interface UserService {
         @Body userInfo: UserInfoRequest
     ): Call<Void>
 
-    @POST("/api/user/register")
+    @POST("/api/user/register/google")
     fun registerGoogleUser(@Body user: GoogleRegisterRequest): Call<Void>
 
 }

@@ -1,10 +1,13 @@
 package com.example.SoundMate.controller;
 
+import com.example.SoundMate.dto.UserInfoDTO;
 import com.example.SoundMate.dto.UserRegistrationDTO;
+import com.example.SoundMate.dto.GoogleUserRegistrationDTO;
 import com.example.SoundMate.entity.User;
 import com.example.SoundMate.service.UserService;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserInfo;
 import com.google.firebase.auth.UserRecord;
 
 import org.springframework.http.HttpStatus;
@@ -89,8 +92,8 @@ public class UserController {
 
     // 유저 정보 조회
     @GetMapping("/info")
-    public ResponseEntity<?> getUserInfo(@RequestParam String id) {
-        Optional<User> user = userService.findUserById(id);
+    public ResponseEntity<?> getUserInfo(@RequestParam("uid") String uid) {
+        Optional<User> user = userService.findUserById(uid);
         if (user.isPresent()) {
             Map<String, Object> response = new HashMap<>();
             response.put("gender", user.get().getGender());
@@ -99,5 +102,41 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
+    }
+
+    // 유저 정보 수정
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserInfoDTO userInfo) {
+        Optional<User> userOptional = userService.findUserById(id);
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            user.setGender(userInfo.getGender());
+            user.setAge(userInfo.getAge());
+            userService.saveUser(user);
+            return ResponseEntity.ok("User updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    
+    }
+
+    @PostMapping("/register/google")
+    public ResponseEntity<?> registerGoogleUser(@RequestBody GoogleUserRegistrationDTO userDto) {
+        // 이미 구글에서 인증 받은 정보임. 여기서 Firebase에 또 유저 만들 필요 X
+        // 그냥 userDto에서 uid/email/displayName 등 DB에만 저장
+        // 이미 있으면 중복 저장 안하고, 없으면 신규 등록
+        if (userService.existsByUserId(userDto.getUid())) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("이미 등록된 사용자");
+        }
+
+        User user = new User();
+        user.setUserId(userDto.getUid());
+        user.setEmail(userDto.getEmail());
+        user.setDisplayName(userDto.getDisplayName());
+        user.setAge(userDto.getAge());
+        user.setGender(userDto.getGender());
+        userService.saveUser(user);
+
+        return ResponseEntity.ok("회원가입 성공");
     }
 }

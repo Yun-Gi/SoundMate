@@ -15,7 +15,7 @@ public class FirebaseConfig {
 
     @PostConstruct
     public void initFirebase() throws IOException {
-        InputStream serviceAccount = new ClassPathResource("serviceAccountKey.json").getInputStream();
+        InputStream serviceAccount = new ClassPathResource("soundmate-c64ad-firebase-adminsdk-fbsvc-d9eb53b5d5.json").getInputStream();
 
         FirebaseOptions options = FirebaseOptions.builder()
                 .setCredentials(GoogleCredentials.fromStream(serviceAccount))

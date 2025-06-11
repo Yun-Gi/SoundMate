@@ -50,7 +50,9 @@ tasks.withType<Test> {
 tasks.processResources {
     from("src/main/resources") {
         include("**/*.json")
+		duplicatesStrategy = DuplicatesStrategy.INCLUDE
     }
+	
 }
 
 tasks.withType<JavaCompile> {

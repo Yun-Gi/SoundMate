@@ -1,0 +1,36 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+drawable back
+drawable check_10302427
+drawable circle_mask
+drawable google
+drawable googlelogo
+drawable googlelogo2
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable lcon
+drawable logo
+drawable remove_1828843
+drawable rounded_toast_bg
+drawable setting
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+string default_web_client_id
+string gcm_defaultSenderId
+string google_api_key
+string google_app_id
+string google_crash_reporting_api_key
+string google_storage_bucket
+string project_id
+style Theme.SoundMate
+xml backup_rules
+xml data_extraction_rules
+xml network_security_config

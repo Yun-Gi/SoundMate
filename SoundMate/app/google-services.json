@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "13094040746",
+    "project_id": "soundmate-c64ad",
+    "storage_bucket": "soundmate-c64ad.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:13094040746:android:06eaf2b48d23f9cea8ccd3",
+        "android_client_info": {
+          "package_name": "com.example.soundmate"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "13094040746-3e3n9lujbliiuotsqjr3sdf4esq7b7ke.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkJgNksEu901dmog1P2qMZ22mXoosOCdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "13094040746-3e3n9lujbliiuotsqjr3sdf4esq7b7ke.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

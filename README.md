@@ -41,10 +41,10 @@
 
 ## 🛠️ 사용 기술
 
-- **Backend:** `Java`, `JPA`, `JSP`
-- **Frontend:** `HTML`, `CSS`, `JavaScript`
+- **Backend:** `Java`, `Spring Boot`, `Spring Data JPA`
+- **Mobile (Frontend):** `Kotiln (Android)`
 - **Database:** `MySQL`
-- **Web Server:** `Apache Tomcat`
+- **APIs & Others:** `OpenAI GPT API`, `YouTube API`
 <br>
 
 ## ⚙️ 설치 및 실행 방법

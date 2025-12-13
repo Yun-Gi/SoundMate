@@ -49,14 +49,16 @@
 ## ⚙️ 설치 및 실행 방법
 
 ```bash
-# 1. 저장소 클론
-$ git clone [https://github.com/your-username/your-repository.git](https://github.com/your-username/your-repository.git)
+이 프로젝트는 **Android** 환경에서 동작합니다. 실행을 위해 **Android Studio**가 필요합니다. 또한 **Spring Boot(Backend)**로 구동되므로 정상적인 앱 구동을 위해 반드시 백엔드 서버를 먼저 실행해 주세요.
 
-# 2. 필요한 패키지 설치
-$ npm install
+# 1. 저장소 클론
+$ git clone [https://github.com/Yun-Gi/SoundMate.git]
+
+# 2. 백엔드 서버 실행
+$ 프로젝트 내 server 폴더(또는 스프링 프로젝트 폴더명)를 IDE로 열고, src/main/java/.../Application.java 파일을 찾아 실행(Run)합니다.
 
 # 3. 애플리케이션 실행
-$ npm start
+$ Android Studio를 실행하고 프로젝트의 android 폴더를 열고 Gradle 동기화(Sync)가 완료될 때까지 기다립니다. 그 후 상단 툴바에서 에뮬레이터 또는 연결된 기기를 선택하고 Run버튼을 누릅니다.
 ```
 
 <br>

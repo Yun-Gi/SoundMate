@@ -49,7 +49,8 @@
 ## ⚙️ 설치 및 실행 방법
 
 ```bash
-이 프로젝트는 Android환경에서 동작합니다. 실행을 위해 Android Studio가 필요합니다. 또한 Spring Boot(Backend)로 구동되므로 정상적인 앱 구동을 위해 반드시 백엔드 서버를 먼저 실행해 주세요.
+이 프로젝트는 Android환경에서 동작합니다. 실행을 위해 Android Studio가 필요합니다.
+또한 Spring Boot(Backend)로 구동되므로 정상적인 앱 구동을 위해 반드시 백엔드 서버를 먼저 실행해 주세요.
 
 # 1. 저장소 클론
 git clone https://github.com/Yun-Gi/SoundMate.git

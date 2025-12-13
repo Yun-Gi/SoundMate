@@ -55,12 +55,16 @@
 # 1. 저장소 클론
 git clone https://github.com/Yun-Gi/SoundMate.git
 
-# 2. 백엔드 서버 실행
+# 2. 데이터베이스 설정 (MySQL)
+MySQL을 실행하고 'SoundMate' 스키마를 생성합니다.
+SoundMateB/src/resources/application.properties 파일에서 DB 접속 정보를 본인 환경에 맞게 수정합니다.
+
+# 3. 백엔드 서버 실행
 프로젝트 내 SoundMateB 폴더를 IDE로 열고,
 src/main/java/.../Application.java 파일을 찾아 실행(Run)합니다.
 주의: 로컬 환경에서 테스트 시, 안드로이드 소스 코드 내의 API 통신 IP 주소를 본인의 PC IP 주소(예: 192.168.x.x)로 변경해야 할 수 있습니다.
 
-# 3. 애플리케이션 실행
+# 4. 애플리케이션 실행
 Android Studio를 실행하고 프로젝트의 SoundMate폴더를 열고 Gradle 동기화(Sync)가 완료될 때까지 기다립니다.
 그 후 상단 툴바에서 에뮬레이터 또는 연결된 기기를 선택하고 Run버튼을 누릅니다.
 ```

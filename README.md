@@ -56,7 +56,7 @@
 git clone https://github.com/Yun-Gi/SoundMate.git
 
 # 2. 백엔드 서버 실행
-프로젝트 내 server 폴더(또는 스프링 프로젝트 폴더명)를 IDE로 열고,
+프로젝트 내 SoundMateB 폴더를 IDE로 열고,
 src/main/java/.../Application.java 파일을 찾아 실행(Run)합니다.
 
 # 3. 애플리케이션 실행

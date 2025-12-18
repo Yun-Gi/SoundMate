@@ -41,7 +41,7 @@
 ## 🛠️ 사용 기술
 
 - **Backend:** `Java`, `Spring Boot`, `Spring Data JPA`
-- **Mobile (Frontend):** `Kotiln (Android)`
+- **Mobile (Frontend):** `Kotlin (Android)`
 - **Database:** `MySQL`
 - **APIs & Others:** `OpenAI GPT API`, `YouTube API`
 <br>

@@ -1,3 +1,4 @@
+[🇰🇷 한국어(Korean)](README.md) | [🇯🇵 日本語(Japanese)](README_ja.md)
 # 🚀 SoundMate
 
 > 사용자의 감정을 추론하여 음악을 추천해주는 챗봇앱입니다.
